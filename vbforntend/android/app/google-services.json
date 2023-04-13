@@ -1,0 +1,154 @@
+{
+  "project_info": {
+    "project_number": "766504733068",
+    "project_id": "firebasenoti334",
+    "storage_bucket": "firebasenoti334.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:766504733068:android:a54f2acbb4b12596b8aea9",
+        "android_client_info": {
+          "package_name": "com.example.new_proj_1"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "766504733068-7bvfubof7b2bo73h4220kig6f7i8spu1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDIusuD4yOnwnnyFtGawF4mbD2xu1mYWJA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "766504733068-7bvfubof7b2bo73h4220kig6f7i8spu1.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "766504733068-2rlsvikv1dgkakij76rfsgp9sini3jkf.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.noti"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:766504733068:android:e1df6b25b8964c64b8aea9",
+        "android_client_info": {
+          "package_name": "com.example.new_project"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "766504733068-7bvfubof7b2bo73h4220kig6f7i8spu1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDIusuD4yOnwnnyFtGawF4mbD2xu1mYWJA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "766504733068-7bvfubof7b2bo73h4220kig6f7i8spu1.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "766504733068-2rlsvikv1dgkakij76rfsgp9sini3jkf.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.noti"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:766504733068:android:502e5db3cc273283b8aea9",
+        "android_client_info": {
+          "package_name": "com.example.noti"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "766504733068-7bvfubof7b2bo73h4220kig6f7i8spu1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDIusuD4yOnwnnyFtGawF4mbD2xu1mYWJA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "766504733068-7bvfubof7b2bo73h4220kig6f7i8spu1.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "766504733068-2rlsvikv1dgkakij76rfsgp9sini3jkf.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.noti"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:766504733068:android:2c94888a2ccae7a7b8aea9",
+        "android_client_info": {
+          "package_name": "com.example.vbforntend"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "766504733068-7bvfubof7b2bo73h4220kig6f7i8spu1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDIusuD4yOnwnnyFtGawF4mbD2xu1mYWJA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "766504733068-7bvfubof7b2bo73h4220kig6f7i8spu1.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "766504733068-2rlsvikv1dgkakij76rfsgp9sini3jkf.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.noti"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

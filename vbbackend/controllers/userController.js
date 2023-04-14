@@ -434,6 +434,119 @@ class UserController {
       });
     }
   }
+
+  static async getUserById(req, res) {
+    console.log("get user by id called");
+    const { id } = req.params;
+    try {
+      const user = await User.findById(id, { password: 0 });
+      if (user) {
+        res.status(200).send({
+          message: "user found",
+          data: user,
+          success: true,
+        });
+      } else {
+        res.status(404).send({
+          errors: {
+            details: ["user not found"],
+          },
+        });
+      }
+    } catch (error) {
+      console.log(error);
+      res.status(500).send({
+        errors: {
+          details: ["something went worng"],
+        },
+      });
+    }
+  }
+
+  static async getUser(req, res) {
+    try {
+      const user = await User.findById(req.user_id, { password: 0 });
+      if (user) {
+        res.status(200).send({
+          message: "user found",
+          data: user,
+          success: true,
+        });
+      } else {
+        res.status(404).send({
+          errors: {
+            details: ["user not found"],
+          },
+        });
+      }
+    } catch (error) {
+      console.logI(error);
+      res.status(500).send({
+        errors: {
+          details: ["something went worng"],
+        },
+      });
+    }
+  }
+
+  static async updateUser(req, res) {
+    const { id } = req.params;
+    console.log("id", id);
+    try {
+      const user = await User.findOne({ _id: id });
+      console.log(user);
+
+      if (user) {
+        console.log(user);
+        if (user._id == req.user_id) {
+          //check if user with uname already exists
+          if (req.body.username) {
+            let checkUname = await User.findOne({
+              username: req.body.usernama,
+            });
+            if (checkUname) {
+              return res.status(400).send({
+                errors: {
+                  non_field_errors: ["user with username already exists"],
+                },
+              });
+            }
+          }
+
+          await user.updateOne({
+            username: req.body.username ?? user.username,
+            fcm_token: req.body.fcm_token ?? user.fcm_token,
+          });
+          new_user = user.toObject();
+          delete new_user.password;
+          res.status(200).send({
+            message: "user updated successfully",
+            success: true,
+            data: new_user,
+          });
+        } else {
+          res.status(403).send({
+            errors: {
+              details: ["forbidden"],
+            },
+
+            success: false,
+          });
+        }
+      } else {
+        res.status(404).send({
+          message: "profile not found",
+          success: false,
+        });
+      }
+    } catch (error) {
+      console.log(error);
+      res.status(500).send({
+        message: "something went wrong",
+        status: false,
+      });
+    }
+  }
 }
 
 export default UserController;

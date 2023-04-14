@@ -15,21 +15,27 @@ class SignUp extends StatefulWidget {
 class _SignUpState extends State<SignUp> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text("SignUp")),
-      body: Center(
-        child: RoundButton<AuthController>(
-          ontap: () {
-            var data = {
-              'username': 'bibek743',
-              'email': 'bibek256@gmail.com',
-              'phone_num': '+9779860231990',
-              'password': 'Admin@123',
-              'repeat_password': 'Admin@123'
-            };
-            context.read<AuthController>().register(context, data);
-          },
-          text: "Sign Up",
+    return ChangeNotifierProvider(
+      create: (context) => AuthController(),
+      child: Scaffold(
+        appBar: AppBar(title: Text("SignUp")),
+        body: Center(
+          child: Consumer<AuthController>(
+            builder: (context, value, child) => RoundButton(
+              isLoading: context.read<AuthController>().isLoading,
+              ontap: () {
+                var data = {
+                  'username': 'bibek743',
+                  'email': 'bibek256@gmail.com',
+                  'phone_num': '+9779860231990',
+                  'password': 'Admin@123',
+                  'repeat_password': 'Admin@123'
+                };
+                context.read<AuthController>().register(context, data);
+              },
+              text: "Sign Up",
+            ),
+          ),
         ),
       ),
     );

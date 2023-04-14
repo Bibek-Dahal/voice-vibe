@@ -1,15 +1,15 @@
 class User {
-  late final String id;
-  late final String username;
-  late final String email;
-  late final String phone_num;
-  late final List fcm_token;
-  late final String created_at;
-  late final String updated_at;
-  late final bool is_phn_verified;
-  late final bool is_email_verified;
+  final String id;
+  final String username;
+  final String email;
+  final String phone_num;
+  final List? fcm_token;
+  final String created_at;
+  final String updated_at;
+  final bool is_phn_verified;
+  final bool is_email_verified;
 
-  User(
+  const User(
       {required this.id,
       required this.username,
       required this.email,
@@ -48,7 +48,7 @@ class User {
       'username': username,
       'email': email,
       'phone_num': phone_num,
-      'fcmToken': fcm_token,
+      'fcm_token': fcm_token,
       'is_phn_verified': is_phn_verified,
       'is_email_verified': is_email_verified,
       'created_at': created_at,
@@ -61,6 +61,8 @@ class User {
   /*this named constructor is used to convert Map into User model so that it can
   be easily used in views */
   factory User.formJson(Map<String, dynamic> json) {
+    print("form json called");
+    print("id,${json['id']}");
     return User(
         id: json['id'],
         username: json['username'],

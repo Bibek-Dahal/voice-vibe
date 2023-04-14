@@ -14,13 +14,19 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text("Login")),
-      body: Center(
-        child: RoundButton<AuthController>(
-          ontap: () => context.read<AuthController>().login(context,
-              {'phone_num': '+9779864996631', 'password': 'Admin@123'}),
-          text: "Login",
+    return ChangeNotifierProvider(
+      create: (context) => AuthController(),
+      child: Scaffold(
+        appBar: AppBar(title: const Text("Login")),
+        body: Center(
+          child: Consumer<AuthController>(
+            builder: (context, value, child) => RoundButton(
+              isLoading: context.read<AuthController>().isLoading,
+              ontap: () => context.read<AuthController>().login(context,
+                  {'phone_num': '+9779864996631', 'password': 'Admin@123'}),
+              text: "Login",
+            ),
+          ),
         ),
       ),
     );

@@ -66,8 +66,11 @@ class AuthController extends Lodable with ChangeNotifier {
       print(res['data']);
       var created_at = res['data']['created_at'];
       print(created_at.runtimeType);
-      print("user: ${User.formJson(res['data'])}");
-      await userProvider.saveUser(
+
+      print("hello");
+      // print("user: ${User.formJson(res['data'])}");
+
+      await userProvider.saveUserWithToken(
           User.formJson(res['data']), res['auth_token']);
       Future.delayed(const Duration(seconds: 0), () {
         Navigator.pushReplacementNamed(context, RouteName.homeScreen);

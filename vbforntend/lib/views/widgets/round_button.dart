@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:vbforntend/controllers/auth_controller.dart';
 import 'package:vbforntend/utils/lodable.dart';
 
-class RoundButton<T extends Lodable> extends StatelessWidget {
+class RoundButton extends StatelessWidget {
   const RoundButton(
       {super.key,
       this.height = 50,
@@ -34,16 +34,15 @@ class RoundButton<T extends Lodable> extends StatelessWidget {
                 borderRadius: BorderRadius.circular(50),
                 color: Colors.black12,
               ),
-          child: Consumer<T>(
-              builder: (_, value, child) => value.isLoading
-                  ? const Center(
-                      child: CircularProgressIndicator(color: Colors.white),
-                    )
-                  : Center(
-                      child: Text(
-                      text,
-                      style: const TextStyle(backgroundColor: Colors.white10),
-                    ))),
+          child: isLoading
+              ? const Center(
+                  child: CircularProgressIndicator(color: Colors.white),
+                )
+              : Center(
+                  child: Text(
+                  text,
+                  style: const TextStyle(backgroundColor: Colors.white10),
+                )),
         ));
   }
 }

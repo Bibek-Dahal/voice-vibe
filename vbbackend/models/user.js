@@ -23,6 +23,7 @@ const userSchema = mongoose.Schema(
     },
     fcm_token: {
       type: Array,
+      default: [],
     },
 
     password: {

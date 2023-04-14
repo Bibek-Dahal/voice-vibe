@@ -34,6 +34,10 @@ class UrlNotFoundException extends AppException {
       : super(error, statusCode);
 }
 
+class ForbiddenException extends AppException {
+  ForbiddenException(dynamic error, int statusCode) : super(error, statusCode);
+}
+
 class InternetException extends AppException {
   InternetException(dynamic error, [int? statusCode])
       : super(error, statusCode);

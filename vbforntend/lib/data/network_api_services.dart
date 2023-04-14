@@ -214,6 +214,9 @@ class NetworkApiServices extends BaseApiServices {
         throw UrlNotFoundException(error, statusCode);
       case 401:
         throw UnauthorisedException(['user is not authorized'], statusCode);
+
+      case 403:
+        throw ForbiddenException(error, statusCode);
       case 500:
         throw InternalServerErrorException(error, statusCode);
       case 452:

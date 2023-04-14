@@ -6,6 +6,7 @@ import cors from "cors";
 import Sms from "./utils/sendSms.js";
 import auth from "./routes/auth.js";
 import profile from "./routes/profile.js";
+import user from "./routes/user.js";
 dotenv.config();
 const base_dir = process.cwd();
 export default base_dir;
@@ -22,6 +23,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use("/api", auth); //handle auth routes
 app.use("/api/profile", profile);
+app.use("/api/user", user);
 
 const port = 8000;
 const uri = "mongodb://localhost:27017";

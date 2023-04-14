@@ -3,6 +3,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:vbforntend/controllers/auth_controller.dart';
+import 'package:vbforntend/controllers/profile_controller.dart';
 import 'package:vbforntend/controllers/user_controller.dart';
 import 'package:vbforntend/firebase_options.dart';
 import 'package:vbforntend/providers/user_provider.dart';
@@ -23,8 +24,9 @@ void main() async {
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider(create: (_) => UserProvider()),
-      ChangeNotifierProvider(create: (_) => AuthController()),
-      ChangeNotifierProvider(create: (_) => UserController()),
+      // ChangeNotifierProvider(create: (_) => AuthController()),
+      // ChangeNotifierProvider(create: (_) => UserController()),
+      ChangeNotifierProvider(create: (_) => ProfileController()),
     ],
     child: const MyApp(),
   ));

@@ -6,7 +6,7 @@ class AppUrl {
   static const String login = "$baseurl/api/login";
   static const String register = "$baseurl/api/register";
   static const String update_profile =
-      "$baseurl/api/profile/643568e8d0aed00bb41a4079";
+      "$baseurl/api/profile/64381e63abce26549ad2cc7e";
 
 //sends pswd reset otp
   static const String send_otp = "$baseurl/api/send-otp";
@@ -15,4 +15,7 @@ class AppUrl {
   static const String verify_otp = "$baseurl/api/verify-otp";
   static const String pswd_change = "$baseurl/api/password-change";
   static const String pswd_reset = "$baseurl/api/password-reset";
+  static const String get_logged_user = "$baseurl/api/user";
+  static const String update_user = "$baseurl/api/user";
+  static const String get_profile = "$baseurl/api/profile";
 }

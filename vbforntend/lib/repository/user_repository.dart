@@ -15,11 +15,11 @@ class UserRepository {
       Map<String, dynamic> body) async {
     UserProvider userProvider =
         Provider.of<UserProvider>(context, listen: false);
-    String? token = await userProvider.getToken();
-    token = "Bearer $token";
-    print("token $token");
+    String? token = userProvider.getToken;
+    // token = "Bearer $token";
+    // print("token $token");
     // "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MzU2OGU4ZDBhZWQwMGJiNDFhNDA3MyIsImlhdCI6MTY4MTIyNzE5OCwiZXhwIjoxNjgyNTIzMTk4fQ.3-zhE8ZaOBIGUgrrbzW6pOosFQtwCns472Rn3pFzeHk";
-    Map<String, String> header = {'Authorization': token};
+    Map<String, String> header = {'Authorization': "Bearer $token"};
     // try {
     var response = await _apiServices.postMultipartApiResponse(
         AppUrl.update_profile,
@@ -31,5 +31,25 @@ class UserRepository {
     // } catch (error) {
     //   print(error);
     // }
+  }
+
+  Future<dynamic> fetchLoggedUser(BuildContext context) async {
+    UserProvider userProvider =
+        Provider.of<UserProvider>(context, listen: false);
+    String? token = userProvider.getToken;
+    Map<String, String> header = {'Authorization': "Bearer $token"};
+    var response = await _apiServices.getApiResponse(AppUrl.get_logged_user,
+        headers: header);
+    return response;
+  }
+
+  Future<dynamic> fetchProfile(BuildContext context) async {
+    UserProvider userProvider =
+        Provider.of<UserProvider>(context, listen: false);
+    String? token = userProvider.getToken;
+    Map<String, String> header = {'Authorization': "Bearer $token"};
+    var response =
+        await _apiServices.getApiResponse(AppUrl.get_profile, headers: header);
+    return response;
   }
 }

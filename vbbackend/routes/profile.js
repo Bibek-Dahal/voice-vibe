@@ -24,7 +24,6 @@ router.get("/", [authMiddleware, ProfileController.getProfile]);
 //retrive all profile except own profile
 router.get("/retrive-all-profile", [
   authMiddleware,
-
   ProfileController.retriveAllProfile,
 ]);
 

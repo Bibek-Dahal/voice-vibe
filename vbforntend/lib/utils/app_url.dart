@@ -18,4 +18,9 @@ class AppUrl {
   static const String get_logged_user = "$baseurl/api/user";
   static const String update_user = "$baseurl/api/user";
   static const String get_profile = "$baseurl/api/profile";
+  static const String retrive_profile_with_list =
+      "$baseurl/api/profile/retrive-profile-with-list";
+  static const String retrive_all_profile =
+      "$baseurl/api/profile/retrive-all-profile";
+  static const String retrive_all_user = "$baseurl/api/user/retrive-all-user";
 }

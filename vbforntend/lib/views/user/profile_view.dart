@@ -22,6 +22,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
+
     Provider.of<ProfileController>(context, listen: false)
         .fetchProfile(context);
   }
@@ -38,6 +39,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
+    user = context.read<UserProvider>().user;
     print("profile build called");
     return Scaffold(
         appBar: AppBar(
@@ -52,7 +54,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             } else {
               Profile profile = value.apiResponse.data!;
               return ListTile(
-                title: Text('hello'),
+                title: Text(user!.username),
                 trailing: profile.profile_pic != null
                     ? CircleAvatar(
                         backgroundImage: NetworkImage(profile.profile_pic!))

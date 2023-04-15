@@ -115,6 +115,48 @@ class ProfileController {
       });
     }
   }
+
+  static async retriveAllProfile(req, res) {
+    try {
+      const profile = await Profile.find({ user: { $ne: req.user_id } });
+      console.log(profile);
+      res.status(200).send({
+        data: profile,
+        message: "fetched profile",
+        success: true,
+      });
+    } catch (error) {
+      console.log(error);
+      res.status(500).send({
+        errors: {
+          details: ["something went wrong"],
+        },
+        success: false,
+      });
+    }
+  }
+
+  static async retriveProfileWithList(req, res) {
+    try {
+      const profiles = await Profile.find({
+        user: { $in: req.body.user_list },
+      });
+      console.log(profiles);
+      res.status(200).send({
+        data: profiles,
+        message: "profile fetched",
+        success: true,
+      });
+    } catch (error) {
+      console.log(error);
+      res.status(500).send({
+        errors: {
+          details: ["something went wrong"],
+        },
+        success: false,
+      });
+    }
+  }
 }
 
 export default ProfileController;

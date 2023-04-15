@@ -17,4 +17,8 @@ router.get("/:id([a-zA-Z0-9]{24})", [
 
 router.get("/", [authMiddleware, UserController.getUser]);
 
+router.get("/retrive-all-user", [
+  authMiddleware,
+  UserController.retriveAllUser,
+]);
 export default router;

@@ -19,7 +19,7 @@ class NetworkApiServices extends BaseApiServices {
           );
       responseJson = returnResponse(response);
     } on SocketException {
-      throw InternetException(['No Internet Connection']);
+      throw InternetException(['Cannot connect to server']);
     } on TimeoutException {
       throw RequestTimeOutException(['Request Timeout']);
     }
@@ -46,7 +46,7 @@ class NetworkApiServices extends BaseApiServices {
       responseJson = returnResponse(response);
       print("after resJson called");
     } on SocketException {
-      throw InternetException(['No Internet Connection']);
+      throw InternetException(['Cannot connect to server']);
     } on TimeoutException {
       throw TimeoutException('Request Timeout');
     }
@@ -112,7 +112,7 @@ class NetworkApiServices extends BaseApiServices {
       var streamedResponse = await http.Response.fromStream(response);
       responseJson = returnResponse(streamedResponse);
     } on SocketException {
-      throw InternetException(['No Internet Connection']);
+      throw InternetException(['Cannot connect to server']);
     } on TimeoutException {
       throw TimeoutException('Request Timeout');
     }
@@ -132,7 +132,7 @@ class NetworkApiServices extends BaseApiServices {
           .timeout(const Duration(seconds: 10));
       responseJson = returnResponse(response);
     } on SocketException {
-      throw InternetException(['No Internet Connection']);
+      throw InternetException(['Cannot connect to server']);
     } on TimeoutException {
       throw TimeoutException('Request Timeout');
     }
@@ -152,7 +152,7 @@ class NetworkApiServices extends BaseApiServices {
           .timeout(const Duration(seconds: 10));
       responseJson = returnResponse(response);
     } on SocketException {
-      throw InternetException(['No Internet Connection']);
+      throw InternetException(['Cannot connect to server']);
     } on TimeoutException {
       throw TimeoutException('Request Timeout');
     }

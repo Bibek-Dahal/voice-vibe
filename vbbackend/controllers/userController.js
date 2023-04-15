@@ -477,6 +477,7 @@ class UserController {
           errors: {
             details: ["user not found"],
           },
+          success: false,
         });
       }
     } catch (error) {
@@ -485,6 +486,7 @@ class UserController {
         errors: {
           details: ["something went worng"],
         },
+        success: false,
       });
     }
   }
@@ -544,6 +546,28 @@ class UserController {
       res.status(500).send({
         message: "something went wrong",
         status: false,
+      });
+    }
+  }
+
+  static async retriveAllUser(req, res) {
+    try {
+      const users = await User.find(
+        { _id: { $ne: req.user_id } },
+        { password: 0 }
+      );
+      console.log(users);
+      res.status(200).send({
+        data: users,
+        message: "fetched user",
+        success: true,
+      });
+    } catch (error) {
+      res.status(500).send({
+        errors: {
+          details: ["something went wrong"],
+        },
+        success: false,
       });
     }
   }

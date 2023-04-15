@@ -10,14 +10,12 @@ import 'package:vbforntend/utils/utils.dart';
 import 'package:vbforntend/models/user.dart';
 import 'package:vbforntend/providers/user_provider.dart';
 
-class AuthController extends Lodable with ChangeNotifier {
+class AuthController extends ChangeNotifier {
   AuthRepository authRepo = AuthRepository();
   late ApiResponse apiResponse;
-  // bool isLoading = false;
-  AuthController() : super(false);
+  bool isLoading = false;
 
   setIsLoading(bool value) {
-    super.isLoading = value;
     notifyListeners();
   }
 

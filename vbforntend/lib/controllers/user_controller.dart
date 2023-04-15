@@ -7,14 +7,12 @@ import 'package:vbforntend/repository/user_repository.dart';
 import 'package:vbforntend/utils/lodable.dart';
 import 'package:vbforntend/utils/utils.dart';
 
-class UserController extends Lodable with ChangeNotifier {
-  UserController() : super(false);
-
+class UserController extends ChangeNotifier {
   UserRepository userRepository = UserRepository();
   ApiResponse<User> apiResponse = ApiResponse.loading();
-
+  bool isLoading = false;
   setIsLoading(bool value) {
-    super.isLoading = value;
+    isLoading = value;
     notifyListeners();
   }
 

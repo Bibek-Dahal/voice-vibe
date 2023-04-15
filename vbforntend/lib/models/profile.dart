@@ -6,7 +6,7 @@ class Profile {
       required this.user,
       required this.followers,
       required this.following,
-      this.profile_pic = 'kkl',
+      this.profile_pic,
       required this.created_at,
       required this.favourite_topics,
       required this.updated_at});

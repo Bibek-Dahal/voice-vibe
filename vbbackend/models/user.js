@@ -98,7 +98,7 @@ userSchema.post("save", async (doc, next) => {
   //   next();
   // }, 10);
 
-  console.log("post save called", doc);
+  console.log("user post save called", doc);
   try {
     const profile = Profile({ user: doc._id, profile_pic: null });
     await profile.save();

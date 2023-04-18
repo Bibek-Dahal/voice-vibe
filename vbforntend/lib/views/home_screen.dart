@@ -7,6 +7,7 @@ import 'package:vbforntend/providers/user_provider.dart';
 import 'package:vbforntend/routes/route_names.dart';
 import 'package:vbforntend/utils/utils.dart';
 import 'package:vbforntend/views/widgets/round_button.dart';
+import 'package:vbforntend/services/notification_service.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -18,6 +19,16 @@ class HomeScreen extends StatefulWidget {
 String? file;
 
 class _HomeScreenState extends State<HomeScreen> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    NotificationServices notificationServices = NotificationServices();
+    notificationServices.requestNotificationPermission();
+    notificationServices.getDeviceToken().then((value) => print(value));
+    notificationServices.setupInteractMessage(context);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(

@@ -1,26 +1,8 @@
 import Joi from "joi";
 import User from "../../models/user.js";
-import showValidationsError from "../../utils/showValidationsError.js";
+import showValidationsError from "../../utils/show_validations_error.js";
 const pswdPtrn =
   /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!#%*?&]{6,20}$/;
-
-const userLookup = async (email, helpers) => {
-  let user;
-  try {
-    console.log("inside userlookup");
-    user = await User.findOne({ email: email });
-    console.log(user);
-    if (user) {
-      // console.log(helpers)
-      console.log("email already exists");
-      return helpers.message("email already exists");
-    }
-    console.log("hello babs");
-    return email;
-  } catch (error) {
-    console.log(error);
-  }
-};
 
 class AuthValidation {
   /*
@@ -114,8 +96,6 @@ class AuthValidation {
 
     showValidationsError(req, res, next, schema);
   }
-
-  
 
   static passwordReset(req, res, next) {
     const schema = Joi.object({

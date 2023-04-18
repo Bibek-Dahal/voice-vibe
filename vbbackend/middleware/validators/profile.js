@@ -1,6 +1,6 @@
 import Joi from "joi";
 const list_pattern = /[a-zA-Z0-9]{24}/;
-import showValidationsError from "../../utils/showValidationsError.js";
+import showValidationsError from "../../utils/show_validations_error.js";
 
 class ProfileValidation {
   static update = (req, res, next) => {

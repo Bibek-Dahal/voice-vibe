@@ -1,6 +1,6 @@
 import Joi from "joi";
 
-import showValidationsError from "../../utils/showValidationsError.js";
+import showValidationsError from "../../utils/show_validations_error.js";
 
 class UserValidation {
   static async update(req, res, next) {

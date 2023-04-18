@@ -22,18 +22,24 @@ class ProfileController {
             req.body.profile_pic = cloud_res.secure_url;
           }
 
-          const update_profile = await profile.updateOne({
-            profile_pic: req.body.profile_pic ?? profile.profile_pic,
-            favourite_topics:
-              req.body.favourite_topics ?? profile.favourite_topics,
-            followers: req.body.followers ?? profile.followers,
-            following: req.body.following ?? profile.following,
-          });
+          profile.profile_pic = req.body.profile_pic ?? profile.profile_pic;
+          profile.favourite_topics =
+            req.body.favourite_topics ?? profile.favourite_topics;
+          profile.followers = req.body.followers ?? profile.followers;
+          profile.following = req.body.following ?? profile.following;
+
+          // profile.save({
+          //   profile_pic: req.body.profile_pic ?? profile.profile_pic,
+          //   favourite_topics:
+          //     req.body.favourite_topics ?? profile.favourite_topics,
+          //   followers: req.body.followers ?? profile.followers,
+          //   following: req.body.following ?? profile.following,
+          // });
+          profile.save();
 
           res.status(200).send({
             message: "profile updated successfully",
             success: true,
-            data: profile,
           });
         } else {
           res.status(403).send({

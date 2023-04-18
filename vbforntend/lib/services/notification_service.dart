@@ -122,6 +122,7 @@ class NotificationServices {
 
   //handle tap on notification when app is in background or terminated
   Future<void> setupInteractMessage(BuildContext context) async {
+    // print("hello set up interact called");
     // when app is terminated
     RemoteMessage? initialMessage =
         await FirebaseMessaging.instance.getInitialMessage();

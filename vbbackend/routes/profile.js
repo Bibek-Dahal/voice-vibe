@@ -1,8 +1,8 @@
 import express from "express";
 import { upload } from "../config/multer_config.js";
 const router = express.Router();
-import authMiddleware from "../middleware/authMiddleware.js";
-import ProfileController from "../controllers/profileController.js";
+import authMiddleware from "../middleware/auth_middleware.js";
+import ProfileController from "../controllers/profile_controller.js";
 import ProfileValidation from "../middleware/validators/profile.js";
 //update profile
 router.patch("/:id([a-zA-Z0-9]{24})", [

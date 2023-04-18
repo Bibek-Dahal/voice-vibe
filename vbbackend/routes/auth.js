@@ -1,9 +1,9 @@
 import express from "express";
 const router = express.Router();
 
-import UserController from "../controllers/userController.js";
+import UserController from "../controllers/user_controller.js";
 import AuthValidation from "../middleware/validators/auth.js";
-import authMiddleware from "../middleware/authMiddleware.js";
+import authMiddleware from "../middleware/auth_middleware.js";
 
 router.post("/register", [AuthValidation.register, UserController.register]);
 

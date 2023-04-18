@@ -10,8 +10,8 @@ const topicSchema = new Schema({
 });
 
 topicSchema.plugin(uniqueValidator, {
-  message: "topic with {PATH} address already exists.",
+  message: "topic with {PATH} already exists.",
 });
 
-const Topics = mongoose.model("User", topicSchema);
-export default Topics;
+const Topic = mongoose.model("Topic", topicSchema);
+export default Topic;

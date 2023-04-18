@@ -1,9 +1,9 @@
 import User from "../models/user.js";
 import jwt from "jsonwebtoken";
-import { displayMongooseValidationError } from "../utils/displayValidationError.js";
+import { displayMongooseValidationError } from "../utils/display_validation_error.js";
 import dotenv from "dotenv";
-import sendMail from "../utils/sendMail.js";
-import Sms from "../utils/sendSms.js";
+import sendMail from "../utils/send_mail.js";
+import Sms from "../utils/send_sms.js";
 
 dotenv.config();
 
@@ -466,6 +466,8 @@ class UserController {
   static async getUser(req, res) {
     try {
       const user = await User.findById(req.user_id, { password: 0 });
+      // const populated_user = await user.populate("profile");
+      // console.log(populated_user);
       if (user) {
         res.status(200).send({
           message: "user found",
@@ -519,12 +521,10 @@ class UserController {
             username: req.body.username ?? user.username,
             fcm_token: req.body.fcm_token ?? user.fcm_token,
           });
-          new_user = user.toObject();
-          delete new_user.password;
+
           res.status(200).send({
             message: "user updated successfully",
             success: true,
-            data: new_user,
           });
         } else {
           res.status(403).send({
@@ -537,7 +537,7 @@ class UserController {
         }
       } else {
         res.status(404).send({
-          message: "profile not found",
+          message: "user not found",
           success: false,
         });
       }

@@ -16,15 +16,9 @@ space_notification_queue.process(async (job, done) => {
     console.log(error);
     done(new Error("notification cannot be sent"));
   }
-  console.log("hello callback called");
-
-  //   fetch(`https://jsonplaceholder.typicode.com/todos/1`)
-  //     .then((value) => value.json())
-  //     .then((value) => done(null, { data: value }))
-  //     .catch((error) => done(new Error("hello i am error")));
 });
 
-function scheduleTask(schedult_time, topics) {
+async function scheduleTask(schedult_time, topics) {
   console.log("schedule_time", schedult_time);
 
   //   const parsedDateTime = moment.tz(
@@ -45,7 +39,11 @@ function scheduleTask(schedult_time, topics) {
   const delay = parsedDateTime.ts - current_time;
   console.log(delay);
 
-  //   space_notification_queue.add({ topics: topics }, { delay: 5000 });
+  const job = await space_notification_queue.add(
+    { topics: topics },
+    { delay: 10000 }
+  );
+  console.log(job);
 }
 
 space_notification_queue.on("completed", (job, result) => {

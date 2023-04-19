@@ -21,10 +21,14 @@ class AppUrl {
 
 //profile routes
   static const String update_profile =
-      "$baseurl/api/profile/64381e63abce26549ad2cc7e";
+      "$baseurl/api/profile/643ec74432b76b1cb532b113";
   static const String get_profile = "$baseurl/api/profile";
   static const String retrive_profile_with_list =
       "$baseurl/api/profile/retrive-profile-with-list";
   static const String retrive_all_profile =
       "$baseurl/api/profile/retrive-all-profile";
+
+  //space routes
+  static const String space = "$baseurl/api/space";
+  static const String get_all_space = "$baseurl/api/space/get-all-space";
 }

@@ -16,4 +16,16 @@ router.patch("/:id([a-zA-Z0-9]{24})", [
   SpaceController.update,
 ]);
 
+router.get("/:id([a-zA-Z0-9]{24})", [
+  authMiddleware,
+  SpaceController.retriveSpace,
+]);
+
+router.delete("/:id([a-zA-Z0-9]{24})", [
+  authMiddleware,
+  SpaceController.deleteSpace,
+]);
+
+router.get("/get-all-space", [authMiddleware, SpaceController.getAllSpace]);
+
 export default router;

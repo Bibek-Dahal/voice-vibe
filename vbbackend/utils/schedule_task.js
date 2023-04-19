@@ -3,6 +3,7 @@ import { DateTime } from "luxon";
 import moment from "moment-timezone";
 const space_notification_queue = new Queue("space_notification_queue");
 import sendNotification from "./send_notification.js";
+import { parse } from "dotenv";
 
 // const { router, setQueues, replaceQueues, addQueue, removeQueue } =
 //   createBullBoard([new BullAdapter(space_notification_queue)]);
@@ -28,6 +29,11 @@ async function scheduleTask(schedult_time, topics) {
   //   );
 
   const parsedDateTime = DateTime.fromISO(schedult_time, { locale: true });
+
+  console.log("PD", parsedDateTime);
+
+  const fdate = Date(schedult_time);
+  console.log(fdate.toString());
 
   const current_time = Date.now();
   //   console.log(parsedDateTime);

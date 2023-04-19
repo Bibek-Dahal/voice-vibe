@@ -63,7 +63,102 @@ class SpaceController {
         }
       } else {
         res.status(404).send({
-          message: "space not found",
+          errors: {
+            details: ["space not found"],
+          },
+          success: false,
+        });
+      }
+    } catch (error) {
+      console.log(error);
+      res.status(500).send({
+        errors: {
+          details: ["something went wrong"],
+        },
+      });
+    }
+  };
+
+  static retriveSpace = async (req, res) => {
+    const { id } = req.params;
+    try {
+      const space = await Space.findById(id).populate({
+        path: "owner",
+        populate: { path: "user", select: "email username" },
+      });
+      if (space) {
+        res.status(200).send({
+          data: space,
+          message: "space found",
+          success: true,
+        });
+      } else {
+        res.status(404).send({
+          errors: {
+            details: ["space not found"],
+          },
+          success: false,
+        });
+      }
+    } catch (error) {
+      console.log(error);
+      res.status(500).send({
+        errors: {
+          details: ["something went wrong"],
+        },
+      });
+    }
+  };
+
+  static getAllSpace = async (req, res) => {
+    try {
+      // const space = await Space.find({}).populate({
+      //   path: "owner",
+      //   populate: { path: "user", select: "email username" },
+      // });
+      const space = await Space.find({}).populate("owner");
+
+      // const new_space = space.populate("owner.user");
+      res.status(200).send({
+        message: "space fetched successfully",
+        data: space,
+        success: true,
+      });
+    } catch (error) {
+      console.log(error);
+      res.status(500).send({
+        errors: {
+          details: ["something went wrong"],
+        },
+      });
+    }
+  };
+
+  static deleteSpace = async (req, res) => {
+    const { id } = req.params;
+    try {
+      const space = Space.findOne({ _id: id });
+      if (space) {
+        const new_space = await space.populate("owner", "user");
+        if (new_space.owner.user == req.user_id) {
+          await Space.deleteOne({ _id: id });
+          res.status(200).send({
+            message: " space deleted successfully",
+            success: true,
+          });
+        } else {
+          res.status(404).send({
+            errors: {
+              details: ["space not found"],
+            },
+            success: false,
+          });
+        }
+      } else {
+        res.status(404).send({
+          errors: {
+            details: ["space not found"],
+          },
           success: false,
         });
       }

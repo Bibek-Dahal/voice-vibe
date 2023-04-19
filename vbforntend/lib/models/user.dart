@@ -1,24 +1,24 @@
 class User {
-  final String id;
-  final String username;
-  final String email;
-  final String phone_num;
+  final String? id;
+  final String? username;
+  final String? email;
+  final String? phone_num;
   final List? fcm_token;
-  final String created_at;
-  final String updated_at;
-  final bool is_phn_verified;
-  final bool is_email_verified;
+  final String? created_at;
+  final String? updated_at;
+  final bool? is_phn_verified;
+  final bool? is_email_verified;
 
   const User(
-      {required this.id,
-      required this.username,
-      required this.email,
-      required this.phone_num,
-      required this.fcm_token,
-      required this.created_at,
-      required this.updated_at,
-      required this.is_phn_verified,
-      required this.is_email_verified});
+      {this.id,
+      this.username,
+      this.email,
+      this.phone_num,
+      this.fcm_token,
+      this.created_at,
+      this.updated_at,
+      this.is_phn_verified,
+      this.is_email_verified});
 
   User copyWith(
       {String? id,
@@ -62,7 +62,7 @@ class User {
   be easily used in views */
   factory User.formJson(Map<String, dynamic> json) {
     print("form json called");
-    print("id,${json['id']}");
+    // print("id,${json['id']}");
     return User(
         id: json['id'],
         username: json['username'],

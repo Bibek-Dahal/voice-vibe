@@ -14,6 +14,7 @@ class NetworkApiServices extends BaseApiServices {
       {Map<String, String>? headers}) async {
     dynamic responseJson;
     try {
+      print(url);
       final response = await http.get(Uri.parse(url), headers: headers).timeout(
             const Duration(seconds: 10),
           );
@@ -58,9 +59,28 @@ class NetworkApiServices extends BaseApiServices {
 
   @override
   Future<dynamic> patchApiResponse(String url,
-      {required body, Map<String, String>? headers}) {
-    // TODO: implement patchApiResponse
-    throw UnimplementedError();
+      {required body, Map<String, String>? headers}) async {
+    print(url);
+    dynamic responseJson;
+    try {
+      print("post api called");
+      final response = await http
+          .patch(Uri.parse(url), headers: headers, body: body)
+          .timeout(const Duration(seconds: 10));
+      // print(body);
+      var data = jsonDecode(response.body);
+      // print(data);
+      responseJson = returnResponse(response);
+      print("after resJson called");
+    } on SocketException {
+      throw InternetException(['Cannot connect to server']);
+    } on TimeoutException {
+      throw TimeoutException('Request Timeout');
+    }
+    if (kDebugMode) {
+      print(responseJson);
+    }
+    return responseJson;
   }
 
   @override
@@ -148,7 +168,7 @@ class NetworkApiServices extends BaseApiServices {
     dynamic responseJson;
     try {
       final response = await http
-          .put(Uri.parse(url), headers: headers)
+          .delete(Uri.parse(url), headers: headers)
           .timeout(const Duration(seconds: 10));
       responseJson = returnResponse(response);
     } on SocketException {

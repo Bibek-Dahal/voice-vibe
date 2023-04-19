@@ -1,43 +1,49 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:vbforntend/data/app_exception.dart';
 import 'package:vbforntend/data/response/api_response.dart';
 import 'package:vbforntend/data/response/status.dart';
-import 'package:vbforntend/models/profile.dart';
-import 'package:vbforntend/repository/user_repository.dart';
-import 'package:vbforntend/utils/lodable.dart';
+import 'package:vbforntend/models/space.dart';
+import 'package:vbforntend/repository/space_repository.dart';
 import 'package:vbforntend/utils/utils.dart';
 
-class ProfileController extends ChangeNotifier {
-  UserRepository userRepository = UserRepository();
-  ApiResponse<Profile> apiResponse = ApiResponse.loading();
+class SpaceController extends ChangeNotifier {
+  SpaceRepository spaceRepository = SpaceRepository();
+
+  ApiResponse<dynamic> apiResponse = ApiResponse.loading();
   bool isLoading = false;
+
   setIsLoading(bool value) {
     isLoading = value;
     notifyListeners();
     print("after notify listner");
   }
 
-  setResponse(Map<String, dynamic> response) {
+  setResponse(ApiResponse<dynamic> response) {
     print("set res called");
     print("res inside set: $response");
-    apiResponse.data = Profile.fromJson(response['data']);
-    apiResponse.status = Status.COMPLETED;
+    apiResponse = response;
     notifyListeners();
   }
 
   Future<void> fetchProfile(BuildContext context) async {
     try {
       // setLoading(Status.LOADING);
-      Map<String, dynamic> res = await userRepository.fetchProfile(context);
+      Map<String, dynamic> res = await spaceRepository.listSpace(context);
+      print(res);
+      var space = res['data'];
+      List<Space> spaces =
+          List<Space>.generate(space.length, (i) => Space.fromJson(space[i]));
 
-      setResponse(res);
+      apiResponse = ApiResponse<List<Space>>.completed(spaces);
+      setResponse(ApiResponse<List<Space>>.completed(spaces));
     } catch (error) {
       setIsLoading(false);
-      // print("register error: $error");
-      // print(error);
+
       if (error is AppException) {
         print("inside app exception: ${error.error}");
         Utils.showAlertBox(context, error.error);
+        setResponse(ApiResponse.error(error.error));
       } else {
         //  Utils.showAlertBox(context, error.message);
         print(error);

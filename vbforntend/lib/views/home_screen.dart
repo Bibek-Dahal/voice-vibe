@@ -60,6 +60,12 @@ class _HomeScreenState extends State<HomeScreen> {
                   },
                   child: Text("profile screen"),
                 ),
+                ElevatedButton(
+                  onPressed: () async {
+                    Navigator.pushNamed(context, RouteName.listSpaceScreen);
+                  },
+                  child: Text("space screen"),
+                ),
                 Consumer<UserController>(
                   builder: (context, value, child) => RoundButton(
                     isLoading: context.read<UserController>().isLoading,

@@ -99,6 +99,10 @@ class ProfileController {
         { user: req.user_id },
         { password: 0 }
       );
+      // .populate(
+      //   "user",
+      //   "username email phone_num fcm_token is_phn_verified is_email_verified created_at updated_at"
+      // );
       if (profile) {
         res.status(200).send({
           message: "",

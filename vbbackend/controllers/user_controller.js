@@ -10,14 +10,6 @@ dotenv.config();
 class UserController {
   //function for registering new user
   static register = async (req, res) => {
-    // try {
-    //   if (req.file) {
-    //     let cloud_res = await cloudinary.v2.uploader.upload(req.file.path, {
-    //       folder: "node",
-    //     });
-    //     req.body.avatar = cloud_res.secure_url;
-    //   }
-
     try {
       let user = User(req.body);
       const phone_num = req.body.phone_num;
@@ -28,7 +20,7 @@ class UserController {
       }
 
       const otp_token = Sms.genOtp();
-      // Sms.sendOtp(phone_num, otp_token);
+      Sms.sendOtp(phone_num, otp_token);
       const otp_credential = Sms.genOtpCredential(
         phone_num,
         otp_token,

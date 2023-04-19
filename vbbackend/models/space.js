@@ -35,12 +35,12 @@ const spaceSchema = mongoose.Schema(
   }
 );
 
-spaceSchema.post("save", async function (doc, next) {
+spaceSchema.pre("save", async function (next) {
   console.log("pre save called:");
   let space = this;
   // const topics = await Topic.find({ _id: { $in: [space.favourite_topics] } });
   // console.log(topics);
-  // if (!space.isModified("schedule_date")) return next();
+  if (!space.isModified("schedule_date")) return next();
   // const topics = await space.populate("space_topics", "title");
 
   // // console.log(space);

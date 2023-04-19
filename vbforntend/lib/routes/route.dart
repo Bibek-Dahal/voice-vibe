@@ -5,6 +5,7 @@ import 'package:vbforntend/views/home_screen.dart';
 import 'package:vbforntend/views/auth/login_screen.dart';
 import 'package:vbforntend/views/auth/otp_screen.dart';
 import 'package:vbforntend/views/auth/signup_screen.dart';
+import 'package:vbforntend/views/space/list_space.dart';
 import 'package:vbforntend/views/user/profile_view.dart';
 
 class Routes {
@@ -37,6 +38,10 @@ class Routes {
 
       case RouteName.profileScreen:
         return MaterialPageRoute(builder: (context) => const ProfileScreen());
+
+      case RouteName.listSpaceScreen:
+        return MaterialPageRoute(builder: (context) => const ListSpace());
+
       default:
         return MaterialPageRoute(builder: (context) {
           return Text('Route Not Found');

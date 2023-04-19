@@ -54,7 +54,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             } else {
               Profile profile = value.apiResponse.data!;
               return ListTile(
-                title: Text(user!.username),
+                title: Text(user!.username!),
                 trailing: profile.profile_pic != null
                     ? CircleAvatar(
                         backgroundImage: NetworkImage(profile.profile_pic!))

@@ -4,6 +4,7 @@ class ApiResponse<T> {
   Status? status;
   T? data;
   String? message;
+  dynamic error;
 
   ApiResponse({this.status, this.data, this.message});
 
@@ -11,7 +12,7 @@ class ApiResponse<T> {
 
   ApiResponse.completed(this.data) : status = Status.COMPLETED;
 
-  ApiResponse.error(this.message) : status = Status.ERROR;
+  ApiResponse.error(this.error) : status = Status.ERROR;
 
   @override
   String toString() {

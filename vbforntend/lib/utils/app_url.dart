@@ -31,4 +31,7 @@ class AppUrl {
   //space routes
   static const String space = "$baseurl/api/space";
   static const String get_all_space = "$baseurl/api/space/get-all-space";
+
+  //chat
+  static const String chat = "$baseurl/api/chat";
 }

@@ -4,6 +4,7 @@ import { displayMongooseValidationError } from "../utils/display_validation_erro
 import dotenv from "dotenv";
 import sendMail from "../utils/send_mail.js";
 import Sms from "../utils/send_sms.js";
+import Profile from "../models/profile.js";
 
 dotenv.config();
 
@@ -232,10 +233,13 @@ class UserController {
               success: false,
             });
           } else {
+            const profile = await Profile.findOne({ user: user._id });
+            console.log(profile);
             //log the user
             const token = jwt.sign(
               {
                 id: user._id,
+                profile_id: profile._id,
               },
               process.env.JWT_SECRET_KEY,
               { expiresIn: 15 * 24 * 60 * 60 }

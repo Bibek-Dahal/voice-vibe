@@ -11,4 +11,5 @@ class RouteName {
   static const String phnNumEnterScreen = "phn_enter_screen";
   static const String profileScreen = "profile_screen";
   static const String listSpaceScreen = "list_space_screen";
+  static const String chatScreen = "chat_screen";
 }

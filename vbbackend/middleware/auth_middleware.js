@@ -10,6 +10,7 @@ const authMiddleware = async (req, res, next) => {
           const result = await jwt.verify(token, process.env.JWT_SECRET_KEY);
           // console.log(result)
           req.user_id = result.id;
+          req.profile_id = result.profile_id;
           next();
         } catch (error) {
           res.status(401).send({

@@ -6,6 +6,7 @@ import 'package:vbforntend/views/auth/login_screen.dart';
 import 'package:vbforntend/views/auth/otp_screen.dart';
 import 'package:vbforntend/views/auth/signup_screen.dart';
 import 'package:vbforntend/views/space/list_space.dart';
+import 'package:vbforntend/views/user/chat_screen.dart';
 import 'package:vbforntend/views/user/profile_view.dart';
 
 class Routes {
@@ -41,6 +42,9 @@ class Routes {
 
       case RouteName.listSpaceScreen:
         return MaterialPageRoute(builder: (context) => const ListSpace());
+
+      case RouteName.chatScreen:
+        return MaterialPageRoute(builder: (context) => const ChatScreen());
 
       default:
         return MaterialPageRoute(builder: (context) {

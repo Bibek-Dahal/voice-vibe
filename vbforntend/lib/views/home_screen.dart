@@ -62,7 +62,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 ElevatedButton(
                   onPressed: () async {
-                    Navigator.pushNamed(context, RouteName.listSpaceScreen);
+                    Navigator.pushNamed(context, RouteName.chatScreen);
                   },
                   child: Text("space screen"),
                 ),

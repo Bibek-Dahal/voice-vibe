@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 const { Schema } = mongoose;
 import { scheduleTask } from "../utils/schedule_task.js";
 import Topic from "./favourite_topic_category.js";
+import { space_notification_queue } from "../utils/schedule_task.js";
 const spaceSchema = mongoose.Schema(
   {
     owner: {
@@ -13,6 +14,10 @@ const spaceSchema = mongoose.Schema(
     },
     description: {
       type: String,
+    },
+    job_id: {
+      type: String,
+      default: "",
     },
     space_topics: [
       {
@@ -38,28 +43,22 @@ const spaceSchema = mongoose.Schema(
 spaceSchema.pre("save", async function (next) {
   console.log("pre save called:");
   let space = this;
-  // const topics = await Topic.find({ _id: { $in: [space.favourite_topics] } });
-  // console.log(topics);
-  if (!space.isModified("schedule_date")) return next();
-  // const topics = await space.populate("space_topics", "title");
+  console.log(this.isModified("schedule_date"));
 
-  // // console.log(space);
-  // console.log(topics);
-  // const topics_title = topics.space_topics.map((topic) => topic.title);
-  // console.log(topics_title);
+  if (!this.isModified("schedule_date")) return next();
+  console.log("document has been modified");
+  try {
+    const job = await space_notification_queue.getJob(this.job_id);
+    console.log(job);
+    await job.remove();
 
-  scheduleTask(space.schedule_date, space.space_topics);
+    const job_id = await scheduleTask(space.schedule_date, space.space_topics);
+    console.log(job_id);
+    this.job_id = job_id.id;
+  } catch (error) {
+    console.log(error);
+  }
 
-  // if (!this.isModified(this.favourite_topics)) return next();
-
-  // // only hash the password if it has been modified (or is new)
-  // if (!user.isModified("password")) return next();
-
-  // handleSubscription(
-  //   prev_doc.favourite_topics,
-  //   this.favourite_topics,
-  //   this.user
-  // );
   next();
 });
 

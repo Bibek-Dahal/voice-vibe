@@ -1,5 +1,6 @@
 import Space from "../models/space.js";
 import Profile from "../models/profile.js";
+import { space_notification_queue } from "../utils/schedule_task.js";
 
 class SpaceController {
   static create = async (req, res, next) => {
@@ -137,13 +138,20 @@ class SpaceController {
   static deleteSpace = async (req, res) => {
     const { id } = req.params;
     try {
-      const space = Space.findOne({ _id: id });
+      const space = await Space.findOne({ _id: id });
       if (space) {
         const new_space = await space.populate("owner", "user");
         if (new_space.owner.user == req.user_id) {
+          // await Space.remove({ _id: id });
+          console.log(space);
+          console.log(space.job_id);
+          const job = await space_notification_queue.getJob(space.job_id);
+          console.log(job.id);
+          await job.remove();
           await Space.deleteOne({ _id: id });
+
           res.status(200).send({
-            message: " space deleted successfully",
+            message: "space deleted successfully",
             success: true,
           });
         } else {

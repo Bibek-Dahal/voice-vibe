@@ -22,34 +22,21 @@ space_notification_queue.process(async (job, done) => {
 async function scheduleTask(schedult_time, topics) {
   console.log("schedule_time", schedult_time);
 
-  //   const parsedDateTime = moment.tz(
-  //     schedult_time,
-  //     "YYYY-MM-DD HH:mm:ss",
-  //     "Asia/Kathmandu"
-  //   );
+  // Convert datetime string in Nepal time to UTC
+  const nepalTime = moment.tz(schedult_time, "Asia/Kathmandu");
+  const utcTime = nepalTime.utc();
+  console.log(utcTime);
+  console.log(moment.utc());
 
-  const parsedDateTime = DateTime.fromISO(schedult_time, { locale: true });
-
-  console.log("PD", parsedDateTime);
-
-  const fdate = Date(schedult_time);
-  console.log(fdate.toString());
-
-  const current_time = Date.now();
-  //   console.log(parsedDateTime);
-  //   console.log(current_time);
-  //   const p = parsedDateTime.valueOf();
-
-  //   console.log(parsedDateTime.valueOf() - current_time);
-
-  const delay = parsedDateTime.ts - current_time;
-  console.log(delay);
-
+  const delay = utcTime - moment.utc();
+  console.log(delay / 1000);
+  // console.log(utcTime.diff(moment.utc()));
   const job = await space_notification_queue.add(
     { topics: topics },
-    { delay: 10000 }
+    { delay: delay }
   );
-  console.log(job);
+  return job;
+  // console.log(job);
 }
 
 space_notification_queue.on("completed", (job, result) => {

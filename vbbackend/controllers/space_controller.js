@@ -111,13 +111,43 @@ class SpaceController {
     }
   };
 
+  static getAllSpaceOfUser = async (req, res) => {
+    try {
+      const space = await Space.find({ owner: req.profile_id }).populate({
+        path: "owner",
+        populate: { path: "user", select: "email username" },
+      });
+      // console.log(req.profile_id);
+      // const space = await Space.find({ owner: req.profile_id }).populate(
+      //   "owner"
+      // );
+
+      // const new_space = space.populate("owner.user");
+      res.status(200).send({
+        message: "space fetched successfully",
+        data: space,
+        success: true,
+      });
+    } catch (error) {
+      console.log(error);
+      res.status(500).send({
+        errors: {
+          details: ["something went wrong"],
+        },
+      });
+    }
+  };
+
   static getAllSpace = async (req, res) => {
     try {
-      // const space = await Space.find({}).populate({
-      //   path: "owner",
-      //   populate: { path: "user", select: "email username" },
-      // });
-      const space = await Space.find({}).populate("owner");
+      const space = await Space.find({}).populate({
+        path: "owner",
+        populate: { path: "user", select: "email username" },
+      });
+      // console.log(req.profile_id);
+      // const space = await Space.find({ owner: req.profile_id }).populate(
+      //   "owner"
+      // );
 
       // const new_space = space.populate("owner.user");
       res.status(200).send({

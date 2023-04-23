@@ -50,7 +50,9 @@ spaceSchema.pre("save", async function (next) {
   try {
     const job = await space_notification_queue.getJob(this.job_id);
     console.log(job);
-    await job.remove();
+    if (job) {
+      await job.remove();
+    }
 
     const job_id = await scheduleTask(space.schedule_date, space.space_topics);
     console.log(job_id);

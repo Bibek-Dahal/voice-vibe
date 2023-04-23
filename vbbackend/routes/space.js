@@ -26,6 +26,10 @@ router.delete("/:id([a-zA-Z0-9]{24})", [
   SpaceController.deleteSpace,
 ]);
 
-router.get("/get-all-space", [authMiddleware, SpaceController.getAllSpace]);
+router.get("/get-all-space-of-user", [
+  authMiddleware,
+  SpaceController.getAllSpaceOfUser,
+]);
 
+router.get("/get-all-space", [authMiddleware, SpaceController.getAllSpace]);
 export default router;

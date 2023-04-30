@@ -13,7 +13,7 @@ class ProfileController {
       if (profile) {
         console.log(profile);
         if (profile.user == req.user_id) {
-          console.log("inside profile", req.body.profile_pic);
+          // console.log("inside profile", req.body.profile_pic);
 
           if (req.file) {
             let cloud_res = await cloudinary.v2.uploader.upload(req.file.path, {

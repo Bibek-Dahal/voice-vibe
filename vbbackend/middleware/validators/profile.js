@@ -4,6 +4,7 @@ import showValidationsError from "../../utils/show_validations_error.js";
 
 class ProfileValidation {
   static update = (req, res, next) => {
+    console.log(req.body);
     const schema = Joi.object({
       //   user: Joi.string().required(),
       profile_pic: Joi.string(),

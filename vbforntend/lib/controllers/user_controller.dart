@@ -21,12 +21,12 @@ class UserController extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<dynamic> upload(BuildContext context, file, body) async {
+  Future<dynamic> upload(BuildContext context, file, [body]) async {
     setIsLoading(true);
     apiResponse = ApiResponse.loading();
     print("file path: $file");
     try {
-      var res = await userRepository.updatePfofile(context, file, body);
+      var res = await userRepository.updatePfofile(context, file);
       Future.delayed(const Duration(seconds: 0), () {
         Utils.showSnackBar(context, res['message']);
       });

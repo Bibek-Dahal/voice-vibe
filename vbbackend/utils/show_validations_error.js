@@ -2,6 +2,10 @@ import Joi from "joi";
 
 //function for displaying error
 const showValidationsError = async (req, res, next, schema) => {
+  //if multipart request is used
+  // if (req.body.favourite_topics) {
+  //   req.body.favourite_topics = JSON.parse(req.body.favourite_topics);
+  // }
   const { error, value } = await schema.validate(req.body, {
     abortEarly: false,
     errors: { label: "key" },

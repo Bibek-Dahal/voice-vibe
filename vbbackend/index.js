@@ -23,9 +23,11 @@ const base_dir = process.cwd();
 export default base_dir;
 
 const app = express();
-// app.use(express.json());
+
 // parse application/json
-app.use(bodyParser.json());
+app.use(express.json());
+
+// app.use(bodyParser.json());
 
 app.use(cors());
 

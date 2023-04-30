@@ -71,12 +71,12 @@ class _HomeScreenState extends State<HomeScreen> {
                     isLoading: context.read<UserController>().isLoading,
                     text: "upload file",
                     ontap: () async {
-                      var a = {
-                        'favourite_topics': ["c", "d"]
-                      };
+                      // var a = {
+                      //   'favourite_topics': ["Banepa"]
+                      // };
                       context
                           .read<UserController>()
-                          .upload(context, {'profile_pic': file}, a);
+                          .upload(context, {'profile_pic': file});
                     },
                   ),
                 ),

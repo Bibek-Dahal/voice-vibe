@@ -11,8 +11,10 @@ import 'package:vbforntend/utils/app_url.dart';
 class UserRepository {
   final BaseApiServices _apiServices = NetworkApiServices();
 
-  Future<dynamic> updatePfofile(BuildContext context, Map<String, dynamic> file,
-      Map<String, dynamic> body) async {
+  Future<dynamic> updatePfofile(
+    BuildContext context,
+    Map<String, dynamic> file,
+  ) async {
     UserProvider userProvider =
         Provider.of<UserProvider>(context, listen: false);
     String? token = userProvider.getToken;
@@ -23,7 +25,6 @@ class UserRepository {
     // try {
     var response = await _apiServices.postMultipartApiResponse(
         AppUrl.update_profile,
-        body: body,
         files: file,
         headers: header);
     print(response);

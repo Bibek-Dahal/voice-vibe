@@ -12,7 +12,7 @@ abstract class BaseApiServices {
       {required dynamic body, Map<String, String>? headers});
 
   Future<dynamic> postMultipartApiResponse(String url,
-      {required dynamic body,
+      {dynamic body,
       required Map<String, dynamic> files,
       Map<String, String>? headers});
 }

@@ -21,7 +21,7 @@ class AppUrl {
 
 //profile routes
   static const String update_profile =
-      "$baseurl/api/profile/643ec74432b76b1cb532b113";
+      "$baseurl/api/profile/643d532b0bcc85c16a4a01c3";
   static const String get_profile = "$baseurl/api/profile";
   static const String retrive_profile_with_list =
       "$baseurl/api/profile/retrive-profile-with-list";

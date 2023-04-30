@@ -66,7 +66,7 @@ class NetworkApiServices extends BaseApiServices {
       print("post api called");
       final response = await http
           .patch(Uri.parse(url), headers: headers, body: body)
-          .timeout(const Duration(seconds: 10));
+          .timeout(const Duration(seconds: 20));
       // print(body);
       var data = jsonDecode(response.body);
       // print(data);
@@ -85,29 +85,36 @@ class NetworkApiServices extends BaseApiServices {
 
   @override
   Future postMultipartApiResponse(String url,
-      {required dynamic body,
+      {dynamic body,
       required Map<String, dynamic> files,
       Map<String, String>? headers}) async {
     print("multipart called");
     // TODO: implement postMultipartApiResponse
     String img_path = files['profile_pic'] as String;
     print(img_path.runtimeType);
-    print(body);
+    // print(body);
 
     var request = http.MultipartRequest('PATCH', Uri.parse(url));
-    // ..fields['favourite_topic'] = body['favourite_topics'];
 
-    // Encode each key-value pair in the map as a separate part in the multipart request
+    /* can be updated with patch req so use this function for uploading profile only
     body.forEach((key, values) {
-      for (var value in values) {
-        request.fields[key] = value;
+      
+      if (values is List) {
+        // List<dynamic> listOfStringsDynamic =
+        //     values.map((str) => str as dynamic).toList();
+        request.fields[key] = jsonEncode(values);
+      } else {
+        request.fields[key] = values;
       }
-    });
+      // request.fields[key] = values is String ? values : jsonEncode(values);
+      // }
+    });*/
     request.files
         .add(await http.MultipartFile.fromPath('profile_pic', img_path));
 
     request.headers.addAll(headers!);
-    print(request.headers);
+    // print(request.headers);
+    print("req.fields: ${request.fields}");
 
     //decides whether to upload single fle for one field or List of file for one lield
     // List keys = files.keys.toList();

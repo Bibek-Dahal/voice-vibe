@@ -35,8 +35,8 @@ class SpaceController extends ChangeNotifier {
       List<Space> spaces =
           List<Space>.generate(space.length, (i) => Space.fromJson(space[i]));
 
-      apiResponse = ApiResponse<List<Space>>.completed(spaces);
-      setResponse(ApiResponse<List<Space>>.completed(spaces));
+      // apiResponse = ApiResponse<List<Space>>.completed(spaces);
+      setResponse(ApiResponse<List<Space>>.completed(spaces, res['message']));
     } catch (error) {
       setIsLoading(false);
 

@@ -9,15 +9,22 @@ import 'package:vbforntend/utils/utils.dart';
 
 class UserController extends ChangeNotifier {
   UserRepository userRepository = UserRepository();
-  ApiResponse<User> apiResponse = ApiResponse.loading();
+  ApiResponse<dynamic> apiResponse = ApiResponse.loading();
   bool isLoading = false;
   setIsLoading(bool value) {
     isLoading = value;
     notifyListeners();
   }
 
-  setResponse(Map<String, dynamic> response) {
-    apiResponse.data = User.formJson(response);
+  // setResponse(Map<String, dynamic> response) {
+  //   apiResponse.data = User.formJson(response);
+  //   notifyListeners();
+  // }
+
+  setResponse(ApiResponse<dynamic> response) {
+    print("set res called");
+    print("res inside set: $response");
+    apiResponse = response;
     notifyListeners();
   }
 
@@ -48,13 +55,17 @@ class UserController extends ChangeNotifier {
   Future<void> fetchLoggedUser(BuildContext context) async {
     try {
       Map<String, dynamic> res = await userRepository.fetchLoggedUser(context);
-      setResponse(res);
+      User user = User.formJson(res);
+      setResponse(ApiResponse<User>.completed(user, res['message']));
+
+      // setResponse(res);
     } catch (error) {
       setIsLoading(false);
       // print("register error: $error");
       // print(error);
       if (error is AppException) {
         print("inside app exception: ${error.error}");
+        setResponse(ApiResponse<User>.error(error.error));
         Utils.showAlertBox(context, error.error);
       } else {
         //  Utils.showAlertBox(context, error.message);

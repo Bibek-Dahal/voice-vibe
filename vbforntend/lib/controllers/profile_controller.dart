@@ -9,7 +9,7 @@ import 'package:vbforntend/utils/utils.dart';
 
 class ProfileController extends ChangeNotifier {
   UserRepository userRepository = UserRepository();
-  ApiResponse<Profile> apiResponse = ApiResponse.loading();
+  ApiResponse<dynamic> apiResponse = ApiResponse.loading();
   bool isLoading = false;
   setIsLoading(bool value) {
     isLoading = value;
@@ -17,26 +17,34 @@ class ProfileController extends ChangeNotifier {
     print("after notify listner");
   }
 
-  setResponse(Map<String, dynamic> response) {
+  setResponse(ApiResponse<dynamic> response) {
     print("set res called");
     print("res inside set: $response");
-    apiResponse.data = Profile.fromJson(response['data']);
-    apiResponse.status = Status.COMPLETED;
+    apiResponse = response;
     notifyListeners();
   }
+
+  // setResponse(Map<String, dynamic> response) {
+  //   print("set res called");
+  //   print("res inside set: $response");
+  //   apiResponse.data = Profile.fromJson(response['data']);
+  //   apiResponse.status = Status.COMPLETED;
+  //   notifyListeners();
+  // }
 
   Future<void> fetchProfile(BuildContext context) async {
     try {
       // setLoading(Status.LOADING);
       Map<String, dynamic> res = await userRepository.fetchProfile(context);
-
-      setResponse(res);
+      Profile profile = Profile.fromJson(res['data']);
+      setResponse(ApiResponse<Profile>.completed(profile, res['message']));
     } catch (error) {
       setIsLoading(false);
       // print("register error: $error");
       // print(error);
       if (error is AppException) {
         print("inside app exception: ${error.error}");
+        setResponse(ApiResponse<Profile>.error(error.error));
         Utils.showAlertBox(context, error.error);
       } else {
         //  Utils.showAlertBox(context, error.message);

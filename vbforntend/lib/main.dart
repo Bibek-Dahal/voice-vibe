@@ -25,7 +25,7 @@ void main() async {
     providers: [
       ChangeNotifierProvider(create: (_) => UserProvider()),
       // ChangeNotifierProvider(create: (_) => AuthController()),
-      // ChangeNotifierProvider(create: (_) => UserController()),
+      ChangeNotifierProvider(create: (_) => UserController()),
       ChangeNotifierProvider(create: (_) => ProfileController()),
     ],
     child: const MyApp(),

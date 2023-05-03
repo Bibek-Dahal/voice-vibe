@@ -21,7 +21,10 @@ class UserRepository {
     // token = "Bearer $token";
     // print("token $token");
     // "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MzU2OGU4ZDBhZWQwMGJiNDFhNDA3MyIsImlhdCI6MTY4MTIyNzE5OCwiZXhwIjoxNjgyNTIzMTk4fQ.3-zhE8ZaOBIGUgrrbzW6pOosFQtwCns472Rn3pFzeHk";
-    Map<String, String> header = {'Authorization': "Bearer $token"};
+    Map<String, String> header = {
+      'Authorization': "Bearer $token",
+      'Content-Type': 'application/json'
+    };
     // try {
     var response = await _apiServices.postMultipartApiResponse(
         AppUrl.update_profile,
@@ -38,7 +41,10 @@ class UserRepository {
     UserProvider userProvider =
         Provider.of<UserProvider>(context, listen: false);
     String? token = userProvider.getToken;
-    Map<String, String> header = {'Authorization': "Bearer $token"};
+    Map<String, String> header = {
+      'Authorization': "Bearer $token",
+      'Content-Type': 'application/json'
+    };
     var response = await _apiServices.getApiResponse(AppUrl.get_logged_user,
         headers: header);
     return response;
@@ -48,9 +54,29 @@ class UserRepository {
     UserProvider userProvider =
         Provider.of<UserProvider>(context, listen: false);
     String? token = userProvider.getToken;
-    Map<String, String> header = {'Authorization': "Bearer $token"};
+    Map<String, String> header = {
+      'Authorization': "Bearer $token",
+      'Content-Type': 'application/json'
+    };
     var response =
         await _apiServices.getApiResponse(AppUrl.get_profile, headers: header);
+    return response;
+  }
+
+  Future<dynamic> updateUser(BuildContext context, dynamic body) async {
+    UserProvider userProvider =
+        Provider.of<UserProvider>(context, listen: false);
+
+    User user = userProvider.user!;
+    String? token = userProvider.getToken;
+    Map<String, String> header = {
+      'Authorization': "Bearer $token",
+      'Content-Type': 'application/json'
+    };
+    var response = await _apiServices.patchApiResponse(
+        "${AppUrl.update_user}/${user.id}",
+        headers: header,
+        body: body);
     return response;
   }
 }

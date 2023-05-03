@@ -34,7 +34,8 @@ class ChatController extends ChangeNotifier {
       List<Chat> spaces =
           List<Chat>.generate(space.length, (i) => Chat.fromJson(space[i]));
 
-      setResponse(ApiResponse<List<Chat>>.completed(spaces, res['message']));
+      setResponse(ApiResponse<List<Chat>>.completed(
+          data: spaces, message: res['message']));
     } catch (error) {
       setIsLoading(false);
 

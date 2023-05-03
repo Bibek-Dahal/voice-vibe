@@ -37,7 +37,8 @@ class ProfileController extends ChangeNotifier {
       // setLoading(Status.LOADING);
       Map<String, dynamic> res = await userRepository.fetchProfile(context);
       Profile profile = Profile.fromJson(res['data']);
-      setResponse(ApiResponse<Profile>.completed(profile, res['message']));
+      setResponse(ApiResponse<Profile>.completed(
+          data: profile, message: res['message']));
     } catch (error) {
       setIsLoading(false);
       // print("register error: $error");

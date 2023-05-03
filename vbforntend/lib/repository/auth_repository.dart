@@ -10,8 +10,8 @@ import 'package:vbforntend/utils/app_url.dart';
 class AuthRepository {
   final BaseApiServices _apiServices = NetworkApiServices();
   Future<dynamic> signup(dynamic body) async {
-    dynamic res =
-        await _apiServices.postApiResponse(AppUrl.register, body: body);
+    dynamic res = await _apiServices.postApiResponse(AppUrl.register,
+        body: body, headers: {'Content-Type': 'application/json'});
     // return Future.delayed(const Duration(seconds: 3), () {
     // return {'name': 'bibek'};
     // });
@@ -19,31 +19,32 @@ class AuthRepository {
   }
 
   Future<dynamic> login(dynamic body) async {
-    dynamic res = await _apiServices.postApiResponse(AppUrl.login, body: body);
+    dynamic res = await _apiServices.postApiResponse(AppUrl.login,
+        body: body, headers: {'Content-Type': 'application/json'});
     return res;
   }
 
   Future<dynamic> sendOtp(dynamic body) async {
-    dynamic res =
-        await _apiServices.postApiResponse(AppUrl.send_otp, body: body);
+    dynamic res = await _apiServices.postApiResponse(AppUrl.send_otp,
+        body: body, headers: {'Content-Type': 'application/json'});
     return res;
   }
 
   Future<dynamic> verifyOtp(dynamic body) async {
-    dynamic res =
-        await _apiServices.postApiResponse(AppUrl.verify_otp, body: body);
+    dynamic res = await _apiServices.postApiResponse(AppUrl.verify_otp,
+        body: body, headers: {'Content-Type': 'application/json'});
     return res;
   }
 
   Future<dynamic> pswdChange(dynamic body) async {
-    dynamic res =
-        await _apiServices.postApiResponse(AppUrl.pswd_change, body: body);
+    dynamic res = await _apiServices.postApiResponse(AppUrl.pswd_change,
+        body: body, headers: {'Content-Type': 'application/json'});
     return res;
   }
 
   Future<dynamic> pswdReset(dynamic body) async {
-    dynamic res =
-        await _apiServices.postApiResponse(AppUrl.pswd_reset, body: body);
+    dynamic res = await _apiServices.postApiResponse(AppUrl.pswd_reset,
+        body: body, headers: {'Content-Type': 'application/json'});
     return res;
   }
 

@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
@@ -38,8 +39,10 @@ class NetworkApiServices extends BaseApiServices {
     dynamic responseJson;
     try {
       print("post api called");
+      print(body);
+      print(jsonEncode(body));
       final response = await http
-          .post(Uri.parse(url), headers: headers, body: body)
+          .post(Uri.parse(url), headers: headers, body: jsonEncode(body))
           .timeout(const Duration(seconds: 10));
       // print(body);
       var data = jsonDecode(response.body);
@@ -63,9 +66,9 @@ class NetworkApiServices extends BaseApiServices {
     print(url);
     dynamic responseJson;
     try {
-      print("post api called");
+      print("patch api called");
       final response = await http
-          .patch(Uri.parse(url), headers: headers, body: body)
+          .patch(Uri.parse(url), headers: headers, body: jsonEncode(body))
           .timeout(const Duration(seconds: 20));
       // print(body);
       var data = jsonDecode(response.body);
@@ -155,7 +158,7 @@ class NetworkApiServices extends BaseApiServices {
     dynamic responseJson;
     try {
       final response = await http
-          .put(Uri.parse(url), headers: headers, body: body)
+          .put(Uri.parse(url), headers: headers, body: jsonEncode(body))
           .timeout(const Duration(seconds: 10));
       responseJson = returnResponse(response);
     } on SocketException {

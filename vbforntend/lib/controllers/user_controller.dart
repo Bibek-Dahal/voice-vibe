@@ -55,8 +55,32 @@ class UserController extends ChangeNotifier {
   Future<void> fetchLoggedUser(BuildContext context) async {
     try {
       Map<String, dynamic> res = await userRepository.fetchLoggedUser(context);
-      User user = User.formJson(res);
-      setResponse(ApiResponse<User>.completed(user, res['message']));
+      User user = User.formJson(res['data']);
+      setResponse(
+          ApiResponse<User>.completed(data: user, message: res['message']));
+
+      // setResponse(res);
+    } catch (error) {
+      setIsLoading(false);
+      // print("register error: $error");
+      // print(error);
+      if (error is AppException) {
+        print("inside app exception: ${error.error}");
+        setResponse(ApiResponse<User>.error(error.error));
+        Utils.showAlertBox(context, error.error);
+      } else {
+        //  Utils.showAlertBox(context, error.message);
+        print(error);
+      }
+    }
+  }
+
+  Future<void> updateUser(BuildContext context, dynamic body) async {
+    try {
+      Map<String, dynamic> res = await userRepository.updateUser(context, body);
+      User user = User.formJson(res['data']);
+      print(res);
+      setResponse(ApiResponse<User>.completed(message: res['message']));
 
       // setResponse(res);
     } catch (error) {

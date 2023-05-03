@@ -512,15 +512,21 @@ class UserController {
               });
             }
           }
+          const previous_token = user.fcm_token;
+          const provided_token = req.body.fcm_token;
 
           await user.updateOne({
             username: req.body.username ?? user.username,
-            fcm_token: req.body.fcm_token ?? user.fcm_token,
+            fcm_token: req.body.fcm_token
+              ? Array.from(new Set([...previous_token, ...provided_token]))
+              : user.fcm_token,
           });
-
+          const updated_user = await User.findById(id, { password: 0 });
+          console.log(updated_user);
           res.status(200).send({
             message: "user updated successfully",
             success: true,
+            data: updated_user,
           });
         } else {
           res.status(403).send({

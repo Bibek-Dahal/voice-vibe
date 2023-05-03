@@ -55,6 +55,14 @@ class UserProvider extends ChangeNotifier {
     return true;
   }
 
+  Future<bool> saveUser(User user) async {
+    _user = user;
+
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool result = await prefs.setString('user', jsonEncode(_user.toMap()));
+    return result;
+  }
+
   Future<bool> isUserLogged() async {
     print("is user logged called");
     final SharedPreferences prefs = await SharedPreferences.getInstance();

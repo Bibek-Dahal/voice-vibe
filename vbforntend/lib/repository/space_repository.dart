@@ -14,7 +14,10 @@ class SpaceRepository {
         Provider.of<UserProvider>(context, listen: false);
     String? token = userProvider.getToken;
 
-    Map<String, String> header = {'Authorization': "Bearer $token"};
+    Map<String, String> header = {
+      'Authorization': "Bearer $token",
+      'Content-Type': 'application/json'
+    };
     // try {
     var response = await _apiServices.postApiResponse(AppUrl.space,
         body: body, headers: header);
@@ -28,7 +31,10 @@ class SpaceRepository {
         Provider.of<UserProvider>(context, listen: false);
     String? token = userProvider.getToken;
 
-    Map<String, String> header = {'Authorization': "Bearer $token"};
+    Map<String, String> header = {
+      'Authorization': "Bearer $token",
+      'Content-Type': 'application/json'
+    };
 
     var response = await _apiServices.patchApiResponse("${AppUrl.space}/$id",
         body: body, headers: header);

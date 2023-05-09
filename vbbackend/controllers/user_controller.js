@@ -28,14 +28,15 @@ class UserController {
         15 * 60
       );
 
-      const data = {
+      res.status(201).send({
+        data: {
+          otp_credential: otp_credential,
+          phone_num: phone_num,
+        },
         message: "user created successfully",
-        otp_credential: otp_credential,
-        phone_num: phone_num,
-        success: true,
-      };
 
-      res.status(201).send(data);
+        success: true,
+      });
     } catch (error) {
       res.status(500).send({
         errors: {
@@ -355,14 +356,15 @@ class UserController {
           60 * 2
         );
 
-        const data = {
-          message: "OTP sent successfully",
-          pwd_reset_otp_credential: otp_credential,
-          phone_num: phone_num,
-          success: true,
-        };
         //sent mail
-        res.status(200).send(data);
+        res.status(200).send({
+          data: {
+            pwd_reset_otp_credential: otp_credential,
+            phone_num: phone_num,
+          },
+          message: "OTP sent successfully",
+          success: true,
+        });
       } else {
         res.status(404).send({
           errors: {

@@ -28,7 +28,8 @@ class AuthController extends ChangeNotifier {
       setIsLoading(false);
       Future.delayed(const Duration(microseconds: 500), () {
         print("navigation called");
-        Navigator.pushReplacementNamed(context, RouteName.loginScreen);
+        Navigator.pushReplacementNamed(context, RouteName.otpScreen,
+            arguments: res['data']);
         Utils.showSnackBar(context, res['message']);
       });
     } catch (error) {
@@ -70,6 +71,7 @@ class AuthController extends ChangeNotifier {
 
       await userProvider.saveUserWithToken(
           User.formJson(res['data']), res['auth_token']);
+
       Future.delayed(const Duration(seconds: 0), () {
         Navigator.pushReplacementNamed(context, RouteName.homeScreen);
       });
@@ -77,8 +79,11 @@ class AuthController extends ChangeNotifier {
       setIsLoading(false);
       // print("register error: $error");
       // print(error);
+
       if (error is AppException) {
         print("inside app exception: ${error.error}");
+        //Note if userUnverified exception occour push screen to OTP verification screen
+
         Utils.showAlertBox(context, error.error);
       } else {
         //  Utils.showAlertBox(context, error.message);
@@ -97,7 +102,7 @@ class AuthController extends ChangeNotifier {
         print("navigation called");
         //change route to OTP screen
         Navigator.pushReplacementNamed(context, RouteName.otpScreen,
-            arguments: res);
+            arguments: res['data']);
         Utils.showSnackBar(context, res['message']);
       });
     } catch (error) {
@@ -138,7 +143,6 @@ class AuthController extends ChangeNotifier {
     }
   }
 
-  //sends pswd reset OTP with phone num
   Future<void> verifyRegistrationtOtp(
       BuildContext context, Map<String, dynamic> body) async {
     try {
@@ -148,7 +152,8 @@ class AuthController extends ChangeNotifier {
       Future.delayed(const Duration(microseconds: 500), () {
         print("navigation called");
         //change route to Login screen
-        Navigator.pushReplacementNamed(context, RouteName.loginScreen);
+        Navigator.pushNamedAndRemoveUntil(
+            context, RouteName.loginScreen, (route) => false);
         Utils.showSnackBar(context, res['message']);
       });
     } catch (error) {

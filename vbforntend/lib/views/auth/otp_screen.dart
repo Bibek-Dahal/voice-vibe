@@ -10,6 +10,8 @@ class Otp extends StatefulWidget {
 }
 
 class _OtpState extends State<Otp> {
+  //we cant use data directly
+  // use widget.data['phone_num'] for accessing data
   @override
   Widget build(BuildContext context) {
     return Scaffold(

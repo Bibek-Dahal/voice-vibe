@@ -1,6 +1,7 @@
 import { Server } from "socket.io";
 
 import Chat from "../models/chat.js";
+import uploadFromBuffer from "../utils/upload_file.js";
 
 const io = new Server({
   cors: {
@@ -11,9 +12,14 @@ const io = new Server({
 });
 
 io.use((socket, next) => {
-  //   console.log(socket);
-  const username = socket.handshake.headers.username;
-  const userId = socket.handshake.headers.userid;
+  // console.log(socket);
+  // const username = socket.handshake.headers.username;
+  // const userId = socket.handshake.headers.userid;
+  // console.log(socket.handshake.auth);
+
+  const username = socket.handshake.auth.username;
+  const userId = socket.handshake.auth.userid;
+
   if (!username) {
     return next(new Error("invalid username"));
   }
@@ -51,24 +57,39 @@ io.on("connection", (socket) => {
   socket.on("private message", async (data) => {
     //user is already joined to room on its own id so socket.to(to) will send msg
     //to room where only single user exists
-    const { sender, receiver, text, to } = data;
+    let { sender, receiver, text, to, message_type } = data;
+
+    if (message_type == "file") {
+      try {
+        const response = await uploadFromBuffer(data.file);
+        console.log(response);
+        text = response.secure_url;
+        console.log(text);
+      } catch (error) {
+        console.log(error);
+        console.log("sorry cant upload file");
+      }
+    }
     const newChat = await Chat.create({
       sender: sender,
       receiver: receiver,
       text: text,
+      message_type: message_type,
     });
 
     const populated_chat = await newChat.populate("receiver sender");
+
+    console.log(populated_chat);
 
     const newprof = await populated_chat.populate(
       "receiver.user sender.user",
       "username profile_pic"
     );
-    console.log(newprof);
+    // console.log(newprof);
 
     // console.log(newprof);
     io.to([to, socket.userId]).emit("private message", {
-      chat: newChat,
+      chat: newprof,
     });
   });
   // ...

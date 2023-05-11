@@ -14,6 +14,9 @@ const chatSchema = mongoose.Schema(
     text: {
       type: String,
     },
+    message_type: {
+      type: String,
+    },
   },
   {
     timestamps: {

@@ -1,11 +1,12 @@
 import cloudinary from "../config/cloudinary.js";
 import streamifier from "streamifier";
 
-let uploadFromBuffer = (buffer) => {
+let uploadFromBuffer = (buffer, resource_type = "image", folder = "images") => {
   return new Promise((resolve, reject) => {
     let cld_upload_stream = cloudinary.v2.uploader.upload_stream(
       {
-        folder: "foo",
+        resource_type: "auto",
+        folder: folder,
       },
       (error, result) => {
         if (result) {

@@ -2,7 +2,7 @@ import { Server } from "socket.io";
 
 import Chat from "../models/chat.js";
 import uploadFromBuffer from "../utils/upload_file.js";
-
+import fs from "fs";
 const io = new Server({
   cors: {
     // origin: ["http://127.0.0.1:3000","http://localhost:3000"],
@@ -59,7 +59,7 @@ io.on("connection", (socket) => {
     //to room where only single user exists
     let { sender, receiver, text, to, message_type } = data;
 
-    if (message_type == "file") {
+    if (message_type == "file" || message_type == "image") {
       try {
         const response = await uploadFromBuffer(data.file);
         console.log(response);
@@ -69,6 +69,32 @@ io.on("connection", (socket) => {
         console.log(error);
         console.log("sorry cant upload file");
       }
+    }
+
+    if (message_type == "audio") {
+      console.log("Received audio data!");
+
+      try {
+        // decode the Base64 string to a buffer
+        const decodedAudio = Buffer.from(data.audio.split(",")[1], "base64");
+        const response = await uploadFromBuffer(decodedAudio, "video");
+        console.log(response);
+        text = response.secure_url;
+        console.log(text);
+      } catch (error) {
+        console.log(error);
+        console.log("sorry cant upload file");
+      }
+
+      // decode the Base64 string to a buffer
+      const decodedAudio = Buffer.from(data.audio.split(",")[1], "base64");
+
+      // save the buffer to a file
+      // fs.writeFile("audio.mp3", decodedAudio, function (err) {
+      //   if (err) throw err;
+      //   console.log("Audio saved!");
+
+      // });
     }
     const newChat = await Chat.create({
       sender: sender,

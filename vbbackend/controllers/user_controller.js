@@ -21,7 +21,7 @@ class UserController {
       }
 
       const otp_token = Sms.genOtp();
-      Sms.sendOtp(phone_num, otp_token);
+      // Sms.sendOtp(phone_num, otp_token);
       const otp_credential = Sms.genOtpCredential(
         phone_num,
         otp_token,

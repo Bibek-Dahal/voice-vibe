@@ -137,6 +137,30 @@
 
     axios.post('/api/profile/retrive-profile-with-list',data,options)
 
+## 6. Follow Profile
+
+    options = {
+        headers:{
+            'Content-Type':'application/json','Authorization':`Bearer ${access_token}`
+        }
+    }
+
+
+
+    axios.post('/api/profile/follow/<profile-id>',options)
+
+## 7. Uollow Profile
+
+    options = {
+        headers:{
+            'Content-Type':'application/json','Authorization':`Bearer ${access_token}`
+        }
+    }
+
+
+
+    axios.post('/api/profile/unfollow/<profile-id>',options)
+
 # User
 
 ## 1. Get User By Id

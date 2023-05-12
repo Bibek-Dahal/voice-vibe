@@ -4,6 +4,7 @@ const router = express.Router();
 import authMiddleware from "../middleware/auth_middleware.js";
 import ProfileController from "../controllers/profile_controller.js";
 import ProfileValidation from "../middleware/validators/profile.js";
+import Profile from "../models/profile.js";
 //update profile
 router.patch("/:id([a-zA-Z0-9]{24})", [
   authMiddleware,
@@ -33,5 +34,15 @@ router.post(
   ProfileValidation.fetchProfileWithList,
   ProfileController.retriveProfileWithList
 );
+
+router.post("/follow/:id([a-zA-Z0-9]{24})", [
+  authMiddleware,
+  ProfileController.followProfile,
+]);
+
+router.post("/unfollow/:id([a-zA-Z0-9]{24})", [
+  authMiddleware,
+  ProfileController.unfollowProfile,
+]);
 
 export default router;

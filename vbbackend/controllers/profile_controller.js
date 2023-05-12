@@ -167,6 +167,74 @@ class ProfileController {
       });
     }
   }
+
+  static followProfile = async (req, res) => {
+    const { id } = req.params;
+    try {
+      const following_profile = await Profile.findById(id);
+
+      if (following_profile) {
+        await Profile.updateOne(
+          { _id: req.profile_id },
+          { $push: { following: id } }
+        );
+
+        await Profile.updateOne({ _id: id }, { $push: { followers: id } });
+
+        res.status(200).send({
+          message: "following successfull",
+          success: true,
+        });
+      } else {
+        res.status(404).send({
+          errors: {
+            details: ["profile not found"],
+          },
+        });
+      }
+    } catch (error) {
+      res.status(500).send({
+        errors: {
+          details: ["something went wrong"],
+        },
+        success: false,
+      });
+    }
+  };
+
+  static unfollowProfile = async (req, res) => {
+    const { id } = req.params;
+    try {
+      const following_profile = await Profile.findById(id);
+
+      if (following_profile) {
+        await Profile.updateOne(
+          { _id: req.profile_id },
+          { $pull: { following: id } }
+        );
+
+        await Profile.updateOne({ _id: id }, { $pull: { followers: id } });
+
+        res.status(200).send({
+          message: "following successfull",
+          success: true,
+        });
+      } else {
+        res.status(404).send({
+          errors: {
+            details: ["profile not found"],
+          },
+        });
+      }
+    } catch (error) {
+      res.status(500).send({
+        errors: {
+          details: ["something went wrong"],
+        },
+        success: false,
+      });
+    }
+  };
 }
 
 export default ProfileController;

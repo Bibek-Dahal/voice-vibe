@@ -59,24 +59,30 @@ io.on("connection", (socket) => {
     //to room where only single user exists
     let { sender, receiver, text, to, message_type } = data;
 
-    if (message_type == "file" || message_type == "image") {
-      try {
-        const response = await uploadFromBuffer(data.file);
-        console.log(response);
-        text = response.secure_url;
-        console.log(text);
-      } catch (error) {
-        console.log(error);
-        console.log("sorry cant upload file");
-      }
-    }
+    // if (message_type == "file" || message_type == "image") {
 
-    if (message_type == "audio") {
+    //   //if not bs64encoded
+    //   try {
+    //     const response = await uploadFromBuffer(data.file);
+    //     console.log(response);
+    //     text = response.secure_url;
+    //     console.log(text);
+    //   } catch (error) {
+    //     console.log(error);
+    //     console.log("sorry cant upload file");
+    //   }
+    // }
+
+    if (
+      message_type == "file" ||
+      message_type == "image" ||
+      message_type == "audio"
+    ) {
       console.log("Received audio data!");
 
       try {
         // decode the Base64 string to a buffer
-        const decodedAudio = Buffer.from(data.audio.split(",")[1], "base64");
+        const decodedAudio = Buffer.from(data.file.split(",")[1], "base64");
         const response = await uploadFromBuffer(decodedAudio, "video");
         console.log(response);
         text = response.secure_url;
@@ -87,7 +93,7 @@ io.on("connection", (socket) => {
       }
 
       // decode the Base64 string to a buffer
-      const decodedAudio = Buffer.from(data.audio.split(",")[1], "base64");
+      // const decodedAudio = Buffer.from(data.audio.split(",")[1], "base64");
 
       // save the buffer to a file
       // fs.writeFile("audio.mp3", decodedAudio, function (err) {

@@ -15,6 +15,8 @@ import { BullAdapter } from "bull-board/bullAdapter.js";
 import { createBullBoard } from "bull-board";
 import topic from "./routes/topic.js";
 import chat from "./routes/chat.js";
+import notification from "./routes/notification.js";
+
 const { router, setQueues, replaceQueues, addQueue, removeQueue } =
   createBullBoard([new BullAdapter(space_notification_queue)]);
 
@@ -42,6 +44,7 @@ app.use("/api/user", user);
 app.use("/api/space", space);
 app.use("/api/topic", topic);
 app.use("/api/chat", chat);
+app.use("/api/notification", notification);
 
 const port = 8000;
 const uri = "mongodb://localhost:27017";

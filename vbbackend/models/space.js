@@ -54,7 +54,11 @@ spaceSchema.pre("save", async function (next) {
       await job.remove();
     }
 
-    const job_id = await scheduleTask(space.schedule_date, space.space_topics);
+    const job_id = await scheduleTask(
+      space.schedule_date,
+      space.space_topics,
+      space
+    );
     console.log(job_id);
     this.job_id = job_id.id;
   } catch (error) {

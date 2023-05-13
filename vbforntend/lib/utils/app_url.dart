@@ -34,4 +34,7 @@ class AppUrl {
 
   //chat
   static const String chat = "$baseurl/api/chat";
+
+  //notification
+  static const String notifications = "$baseurl/notification";
 }

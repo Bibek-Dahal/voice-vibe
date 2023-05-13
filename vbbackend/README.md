@@ -307,3 +307,25 @@
     }
 
     axios.get('api/topic',options)
+
+# Notification
+
+## 1. List Notifications
+
+    options = {
+            headers:{
+                'Content-Type':'application/json','Authorization':`Bearer ${access_token}`
+            }
+        }
+
+        axios.get('api/notification',options)
+
+## 1. Retrive Notifications
+
+    options = {
+            headers:{
+                'Content-Type':'application/json','Authorization':`Bearer ${access_token}`
+            }
+        }
+
+        axios.get('api/notification/<noti-id>',options)

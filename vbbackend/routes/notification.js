@@ -3,8 +3,14 @@ import authMiddleware from "../middleware/auth_middleware.js";
 import NotificationController from "../controllers/notification_controller.js";
 const router = express.Router();
 
+//count unseen notificatioin
+router.get("/count", [
+  authMiddleware,
+  NotificationController.countUnseenNotificatioin,
+]);
+
 //retrive notification
-router.get("/:id", [
+router.get("/:id([a-zA-Z0-9]{24})", [
   authMiddleware,
   NotificationController.retriveNotification,
 ]);

@@ -144,9 +144,6 @@
             'Content-Type':'application/json','Authorization':`Bearer ${access_token}`
         }
     }
-
-
-
     axios.post('/api/profile/follow/<profile-id>',options)
 
 ## 7. Uollow Profile
@@ -156,9 +153,6 @@
             'Content-Type':'application/json','Authorization':`Bearer ${access_token}`
         }
     }
-
-
-
     axios.post('/api/profile/unfollow/<profile-id>',options)
 
 # User
@@ -313,19 +307,29 @@
 ## 1. List Notifications
 
     options = {
-            headers:{
-                'Content-Type':'application/json','Authorization':`Bearer ${access_token}`
-            }
+        headers:{
+            'Content-Type':'application/json','Authorization':`Bearer ${access_token}`
         }
+    }
 
         axios.get('api/notification',options)
 
-## 1. Retrive Notifications
+## 2. Retrive Notifications
 
     options = {
-            headers:{
-                'Content-Type':'application/json','Authorization':`Bearer ${access_token}`
-            }
+        headers:{
+            'Content-Type':'application/json','Authorization':`Bearer ${access_token}`
         }
+    }
 
-        axios.get('api/notification/<noti-id>',options)
+    axios.get('api/notification/<noti-id>',options)
+
+## 3. Count Unseen Notification
+
+    options = {
+        headers:{
+            'Content-Type':'application/json','Authorization':`Bearer ${access_token}`
+        }
+    }
+
+    axios.get('api/notification/count',options)

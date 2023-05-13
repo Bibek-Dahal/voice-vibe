@@ -53,6 +53,43 @@ class NotificationController {
       });
     }
   };
+
+  static countUnseenNotificatioin = async (req, res) => {
+    console.log("hello inside count");
+    try {
+      console.log(req.profile_id);
+      const notification = await Notification.find({
+        profile: req.profile_id,
+        is_seen: false,
+      }).count();
+
+      console.log(notification);
+
+      res.status(200).send({
+        data: {
+          count: notification,
+        },
+        success: true,
+        message: "count completed",
+      });
+    } catch (error) {
+      console.log(error);
+      res.status(500).send({
+        errors: {
+          details: ["something went wrong"],
+        },
+        success: false,
+      });
+    }
+  };
+
+  // static countUnseenNotification = async (req, res) => {
+  //   try {
+  //     res.status(200).send({
+  //       msg: "ok",
+  //     });
+  //   } catch (error) {}
+  // };
 }
 
 export default NotificationController;

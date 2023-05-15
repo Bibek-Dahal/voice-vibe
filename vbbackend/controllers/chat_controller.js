@@ -81,12 +81,14 @@ class ChatController {
             path: "receiver",
             select: "profile_pic",
             populate: { path: "user", select: "email username" },
-          });
+          })
+          .sort({ created_at: -1 })
+          .limit(1);
 
         const lastChat = c.slice(-1);
-        // console.log("lastdata", lastChat);
 
-        chatData.push(lastChat[0]);
+        // chatData.push(lastChat[0]);
+        chatData.push(c);
       });
 
       // Wait for all promises to resolve

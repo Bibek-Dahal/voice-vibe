@@ -31,5 +31,11 @@ router.get("/get-all-space-of-user", [
   SpaceController.getAllSpaceOfUser,
 ]);
 
+//list scheduled spaces based on user fav topics
+router.get("/get-scheduled-space", [
+  authMiddleware,
+  SpaceController.displayScheduledSpace,
+]);
+
 router.get("/get-all-space", [authMiddleware, SpaceController.getAllSpace]);
 export default router;

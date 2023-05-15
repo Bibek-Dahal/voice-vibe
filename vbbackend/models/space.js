@@ -49,7 +49,8 @@ spaceSchema.pre("save", async function (next) {
   console.log("document has been modified");
   try {
     const job = await space_notification_queue.getJob(this.job_id);
-    console.log(job);
+    // console.log(job);
+    console.log("space", space);
     if (job) {
       await job.remove();
     }

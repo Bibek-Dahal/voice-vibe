@@ -4,7 +4,7 @@ import { space_notification_queue } from "../utils/schedule_task.js";
 
 class SpaceController {
   static create = async (req, res, next) => {
-    const { title, schedule_date, favourite_topics } = req.body;
+    const { title, schedule_date, space_topics } = req.body;
     console.log(schedule_date);
 
     try {
@@ -14,7 +14,7 @@ class SpaceController {
         owner: profile._id,
         title: title,
         description: req.body.description ?? null,
-        space_topics: favourite_topics,
+        space_topics: space_topics,
         schedule_date: schedule_date,
       });
       return res.status(201).send({
@@ -200,6 +200,36 @@ class SpaceController {
           success: false,
         });
       }
+    } catch (error) {
+      console.log(error);
+      res.status(500).send({
+        errors: {
+          details: ["something went wrong"],
+        },
+      });
+    }
+  };
+
+  static displayScheduledSpace = async (req, res) => {
+    const { id } = req.params;
+    try {
+      const date = new Date();
+
+      console.log(date);
+      const profile = await Profile.findById(req.profile_id);
+      const spaces = await Space.find({
+        schedule_date: { $gt: new Date() },
+        favourite_topics: { $in: profile.favourite_topics },
+      }).populate({
+        path: "owner",
+        populate: { path: "user", select: "email username" },
+      });
+      console.log(spaces);
+      res.status(200).send({
+        data: spaces,
+        message: "spaces fetched successfully",
+        success: true,
+      });
     } catch (error) {
       console.log(error);
       res.status(500).send({

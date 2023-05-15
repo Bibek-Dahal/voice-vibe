@@ -214,6 +214,16 @@
 
     axios.get('/api/chat/<profile-id>',options)
 
+## 2. List last chat with associated user
+
+    options = {
+            headers:{
+                'Content-Type':'application/json','Authorization':`Bearer ${access_token}`
+            }
+        }
+
+    axios.get('/api/chat//display-chat-associated-with-user',options)
+
 # Space
 
 ## 1. Create Space
@@ -289,6 +299,17 @@
 
 
     axios.get('api/space/get-all-space',options)
+
+## 4. Display Scheduled Space On Basis Of User Topics
+
+    options = {
+        headers:{
+            'Content-Type':'application/json','Authorization':`Bearer ${access_token}`
+        }
+    }
+
+
+    axios.get('api/space//get-scheduled-space',options)
 
 # Topic
 

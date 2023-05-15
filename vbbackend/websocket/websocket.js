@@ -13,12 +13,12 @@ const io = new Server({
 
 io.use((socket, next) => {
   // console.log(socket);
-  const username = socket.handshake.headers.username;
-  const userId = socket.handshake.headers.userid;
+  // const username = socket.handshake.headers.username;
+  // const userId = socket.handshake.headers.userid;
   // console.log(socket.handshake.auth);
 
-  // const username = socket.handshake.auth.username;
-  // const userId = socket.handshake.auth.userid;
+  const username = socket.handshake.auth.username;
+  const userId = socket.handshake.auth.userid;
 
   if (!username) {
     return next(new Error("invalid username"));

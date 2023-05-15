@@ -85,7 +85,7 @@ class ChatController {
           .sort({ created_at: -1 })
           .limit(1);
 
-        const lastChat = c.slice(-1);
+        // const lastChat = c.slice(-1);
 
         // chatData.push(lastChat[0]);
         chatData.push(c);

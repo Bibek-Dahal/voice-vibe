@@ -3,6 +3,7 @@ const { Schema } = mongoose;
 import { scheduleTask } from "../utils/schedule_task.js";
 import Topic from "./favourite_topic_category.js";
 import { space_notification_queue } from "../utils/schedule_task.js";
+import io from "../websocket/websocket.js";
 const spaceSchema = mongoose.Schema(
   {
     owner: {
@@ -27,6 +28,10 @@ const spaceSchema = mongoose.Schema(
     schedule_date: {
       type: Date,
     },
+    is_live: {
+      type: Boolean,
+      default: false,
+    },
     is_finished: {
       type: Boolean,
       default: false,
@@ -50,7 +55,7 @@ spaceSchema.pre("save", async function (next) {
   try {
     const job = await space_notification_queue.getJob(this.job_id);
     // console.log(job);
-    console.log("space", space);
+    // console.log("space", space);
     if (job) {
       await job.remove();
     }
@@ -68,6 +73,21 @@ spaceSchema.pre("save", async function (next) {
 
   next();
 });
+
+spaceSchema.post("save", async function (doc, next) {
+  console.log("post save called");
+  handleWebsocketEvents(doc.id, doc);
+});
+
+const handleWebsocketEvents = async (spaceId, doc) => {
+  console.log("handle websocket called");
+  console.log(spaceId);
+
+  io.in(spaceId).emit("space live event", {
+    msg: "hello",
+    data: { id: doc._id, is_live: doc.is_finished },
+  });
+};
 
 const Space = mongoose.model("Spaces", spaceSchema);
 export default Space;

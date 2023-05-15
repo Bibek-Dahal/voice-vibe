@@ -13,12 +13,12 @@ const io = new Server({
 
 io.use((socket, next) => {
   // console.log(socket);
-  // const username = socket.handshake.headers.username;
-  // const userId = socket.handshake.headers.userid;
+  const username = socket.handshake.headers.username;
+  const userId = socket.handshake.headers.userid;
   // console.log(socket.handshake.auth);
 
-  const username = socket.handshake.auth.username;
-  const userId = socket.handshake.auth.userid;
+  // const username = socket.handshake.auth.username;
+  // const userId = socket.handshake.auth.userid;
 
   if (!username) {
     return next(new Error("invalid username"));
@@ -30,20 +30,6 @@ io.use((socket, next) => {
 
 io.on("connection", (socket) => {
   console.log(socket.userId);
-  const users = [];
-  //retrive all the socket that are currently connected
-  for (let [id, socket] of io.of("/").sockets) {
-    users.push({
-      userId: socket.userId,
-      username: socket.username,
-    });
-  }
-
-  //join socket to room
-  socket.join(socket.userId);
-
-  //basic emit to the sender
-  socket.emit("users", users);
 
   //append new user to online user list msg will be sent to all except user
 
@@ -51,6 +37,31 @@ io.on("connection", (socket) => {
   socket.broadcast.emit("user connected", {
     userId: socket.userId,
     username: socket.username,
+  });
+
+  //handle space connection
+  socket.on("space live event", async (data) => {
+    console.log("space live called", data);
+    socket.join(data.space_id);
+    socket.emit("space live event", "hello world");
+  });
+
+  //join the room for private chatting
+  socket.on("join private chat room", async (data) => {
+    const users = [];
+    //retrive all the socket that are currently connected
+    for (let [id, socket] of io.of("/").sockets) {
+      users.push({
+        userId: socket.userId,
+        username: socket.username,
+      });
+    }
+
+    //join socket to room
+    socket.join(socket.userId);
+
+    //basic emit to the sender
+    socket.emit("users", users);
   });
 
   //emitted when user send private message

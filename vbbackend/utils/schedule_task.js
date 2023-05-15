@@ -18,7 +18,7 @@ space_notification_queue.process(async (job, done) => {
       favourite_topics: { $in: topics },
     });
 
-    console.log(profiles);
+    // console.log(profiles);
 
     let notifications = profiles.map((p) => {
       return {

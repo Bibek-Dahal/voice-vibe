@@ -20,6 +20,7 @@ class SpaceValidation {
       description: Joi.string(),
       space_topics: Joi.array().items(Joi.string()),
       is_finished: Joi.bool(),
+      is_live: Joi.bool(),
       schedule_date: Joi.date().iso(),
     });
     showValidationsError(req, res, next, schema);

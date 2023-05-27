@@ -2,7 +2,10 @@ import { Server } from "socket.io";
 
 import Chat from "../models/chat.js";
 import uploadFromBuffer from "../utils/upload_file.js";
-import fs from "fs";
+import Profile from "../models/profile.js";
+import mongoose from "mongoose";
+
+let onlineUsers = [];
 const io = new Server({
   cors: {
     // origin: ["http://127.0.0.1:3000","http://localhost:3000"],
@@ -13,12 +16,13 @@ const io = new Server({
 
 io.use((socket, next) => {
   // console.log(socket);
-  // const username = socket.handshake.headers.username;
-  // const userId = socket.handshake.headers.userid;
+  console.log("hello");
+  const username = socket.handshake.headers.username;
+  const userId = socket.handshake.headers.userid;
   // console.log(socket.handshake.auth);
 
-  const username = socket.handshake.auth.username;
-  const userId = socket.handshake.auth.userid;
+  // const username = socket.handshake.auth.username;
+  // const userId = socket.handshake.auth.userid;
 
   if (!username) {
     return next(new Error("invalid username"));
@@ -28,16 +32,53 @@ io.use((socket, next) => {
   next();
 });
 
-io.on("connection", (socket) => {
+io.on("connection", async (socket) => {
+  // console.log("connection called", socket);
+  let users = [];
   console.log(socket.userId);
 
   //append new user to online user list msg will be sent to all except user
 
+  //join user to room
+  socket.join(socket.userId);
+
+  users.push({
+    userId: socket.userId,
+    username: socket.username,
+  });
   // notify existing users
   socket.broadcast.emit("user connected", {
     userId: socket.userId,
     username: socket.username,
   });
+
+  // Create an array of promises
+  const promises = Array.from(users).map(async (user) => {
+    console.log("inside chatset foreach", Object.keys(user)[0]);
+    const profilemodel = await Profile.findOne({
+      _id: user.userId,
+    })
+      .populate({
+        path: "user",
+        select: "username",
+        // populate: { path: "user", select: "email username" },
+      })
+      .select("profile_pic id");
+
+    // const lastChat = c.slice(-1);
+    let profileId = socket.userId;
+    // Wait for all promises to resolve
+
+    onlineUsers.push(profilemodel);
+    // chatData = c;
+  });
+
+  await Promise.all(promises);
+  console.log(onlineUsers);
+  console.log(users);
+
+  //basic emit to the sender
+  io.emit("list online users", onlineUsers);
 
   //handle space connection
   socket.on("space live event", async (data) => {
@@ -46,17 +87,53 @@ io.on("connection", (socket) => {
     socket.emit("space live event", "hello world");
   });
 
+  //display list of online users
+  socket.on("list online users", async (data) => {
+    //retrive all the socket that are currently connected
+    // for (let [id, socket] of io.of("/").sockets) {
+    //   users.push({
+    //     userId: socket.userId,
+    //     username: socket.username,
+    //   });
+    // }
+
+    //join socket to room
+
+    // let onlineUsers = [];
+
+    // // Create an array of promises
+    // const promises = Array.from(users).map(async (user) => {
+    //   console.log("inside chatset foreach", Object.keys(user)[0]);
+    //   const profilemodel = await Profile.findOne({
+    //     _id: user.userId,
+    //   })
+    //     .populate({
+    //       path: "user",
+    //       select: "username",
+    //       // populate: { path: "user", select: "email username" },
+    //     })
+    //     .select("profile_pic id");
+
+    //   // const lastChat = c.slice(-1);
+    //   let profileId = socket.userId;
+    //   // Wait for all promises to resolve
+
+    //   console.log("profile model", profilemodel);
+    //   onlineUsers.push(profilemodel);
+    //   // chatData = c;
+    // });
+
+    // await Promise.all(promises);
+    // console.log(onlineUsers);
+    // console.log(users);
+    // console.log();
+
+    //basic emit to the sender
+    io.emit("list online users", onlineUsers);
+  });
+
   //join the room for private chatting
   socket.on("join private chat room", async (data) => {
-    const users = [];
-    //retrive all the socket that are currently connected
-    for (let [id, socket] of io.of("/").sockets) {
-      users.push({
-        userId: socket.userId,
-        username: socket.username,
-      });
-    }
-
     //join socket to room
     socket.join(socket.userId);
 
@@ -135,7 +212,25 @@ io.on("connection", (socket) => {
       chat: newprof,
     });
   });
+
+  socket.on("disconnect", () => {
+    console.log("socket disconnect called");
+    console.log("previous length", onlineUsers.length);
+    console.log(socket.userId);
+    const filteredArray = onlineUsers.filter(
+      (obj) => obj["_id"].toString() !== socket.userId
+    );
+    console.log("after length", filteredArray.length);
+    onlineUsers = filteredArray;
+    io.emit("list online users", filteredArray);
+  });
   // ...
 });
+
+// io.on("connection", (socket) => {
+//   console.log("connection called", socket);
+//   // console.log(socket.handshake.headers);
+//   let users = [];
+// });
 
 export default io;

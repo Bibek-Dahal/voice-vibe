@@ -60,7 +60,7 @@ class Profile {
   }
 
   factory Profile.fromJson(Map<String, dynamic> json) {
-    print("profile from json called");
+    // print("profile from json called");
     return Profile(
         id: json['_id'],
         user: Profile.checkIsMap(json['user'])

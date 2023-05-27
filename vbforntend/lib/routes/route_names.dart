@@ -12,4 +12,7 @@ class RouteName {
   static const String profileScreen = "profile_screen";
   static const String listSpaceScreen = "list_space_screen";
   static const String chatScreen = "chat_screen";
+  static const String notificationScreen = "notification_screen";
+  static const String chatHomeScreen = "chat_home_screen";
+  static const String privateChatScreen = "private_chat_screen";
 }

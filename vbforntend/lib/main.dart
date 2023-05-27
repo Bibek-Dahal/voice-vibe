@@ -3,9 +3,12 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:vbforntend/controllers/auth_controller.dart';
+import 'package:vbforntend/controllers/chat_controller.dart';
 import 'package:vbforntend/controllers/profile_controller.dart';
 import 'package:vbforntend/controllers/user_controller.dart';
 import 'package:vbforntend/firebase_options.dart';
+import 'package:vbforntend/providers/profile_provider.dart';
+import 'package:vbforntend/providers/socket_provider.dart';
 import 'package:vbforntend/providers/user_provider.dart';
 import 'package:vbforntend/routes/route.dart';
 import 'package:vbforntend/routes/route_names.dart';
@@ -27,6 +30,10 @@ void main() async {
       // ChangeNotifierProvider(create: (_) => AuthController()),
       ChangeNotifierProvider(create: (_) => UserController()),
       ChangeNotifierProvider(create: (_) => ProfileController()),
+      ChangeNotifierProvider(create: (_) => ChatController()),
+      ChangeNotifierProvider(create: (_) => ProfileProvider()),
+      ChangeNotifierProvider(
+          create: (context) => SocketProvider()..setSocket(context)),
     ],
     child: const MyApp(),
   ));

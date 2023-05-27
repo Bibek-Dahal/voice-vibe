@@ -20,8 +20,7 @@ class AppUrl {
   static const String retrive_all_user = "$baseurl/api/user/retrive-all-user";
 
 //profile routes
-  static const String update_profile =
-      "$baseurl/api/profile/643d532b0bcc85c16a4a01c3";
+  static const String update_profile = "$baseurl/api/profile";
   static const String get_profile = "$baseurl/api/profile";
   static const String retrive_profile_with_list =
       "$baseurl/api/profile/retrive-profile-with-list";
@@ -34,6 +33,8 @@ class AppUrl {
 
   //chat
   static const String chat = "$baseurl/api/chat";
+  static const String list_home_screen_chats =
+      "$baseurl/api/chat/display-chat-associated-with-user";
 
   //notification
   static const String notifications = "$baseurl/notification";

@@ -20,4 +20,17 @@ class ChatRepository {
     print(response);
     return response;
   }
+
+  Future<dynamic> listHomeScreenChats(BuildContext context) async {
+    UserProvider userProvider =
+        Provider.of<UserProvider>(context, listen: false);
+    String? token = userProvider.getToken;
+
+    Map<String, String> header = {'Authorization': "Bearer $token"};
+
+    var response = await _apiServices
+        .getApiResponse(AppUrl.list_home_screen_chats, headers: header);
+    print(response);
+    return response;
+  }
 }

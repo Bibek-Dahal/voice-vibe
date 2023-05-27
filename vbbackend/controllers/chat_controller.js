@@ -64,7 +64,7 @@ class ChatController {
         }
       });
 
-      const chatData = [];
+      let chatData = [];
 
       // Create an array of promises
       const promises = Array.from(chatSet).map(async (id) => {
@@ -87,8 +87,8 @@ class ChatController {
 
         // const lastChat = c.slice(-1);
 
-        // chatData.push(lastChat[0]);
-        chatData.push(c);
+        chatData.push(c[0]);
+        // chatData = c;
       });
 
       // Wait for all promises to resolve

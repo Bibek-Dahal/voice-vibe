@@ -6,7 +6,9 @@ import 'package:vbforntend/views/auth/login_screen.dart';
 import 'package:vbforntend/views/auth/otp_screen.dart';
 import 'package:vbforntend/views/auth/signup_screen.dart';
 import 'package:vbforntend/views/space/list_space.dart';
+import 'package:vbforntend/views/user/chat_home_screen.dart';
 import 'package:vbforntend/views/user/chat_screen.dart';
+import 'package:vbforntend/views/user/private_chat_screen.dart';
 import 'package:vbforntend/views/user/profile_view.dart';
 
 class Routes {
@@ -46,6 +48,13 @@ class Routes {
       case RouteName.chatScreen:
         return MaterialPageRoute(builder: (context) => const ChatScreen());
 
+      case RouteName.chatHomeScreen:
+        return MaterialPageRoute(builder: (context) => const ChatHomeScreen());
+
+      case RouteName.privateChatScreen:
+        return MaterialPageRoute(
+            builder: (context) => PrivateChatScreen(
+                data: settings.arguments as Map<String, dynamic>));
       default:
         return MaterialPageRoute(builder: (context) {
           return Text('Route Not Found');

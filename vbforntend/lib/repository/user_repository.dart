@@ -12,9 +12,7 @@ class UserRepository {
   final BaseApiServices _apiServices = NetworkApiServices();
 
   Future<dynamic> updatePfofile(
-    BuildContext context,
-    Map<String, dynamic> file,
-  ) async {
+      BuildContext context, Map<String, dynamic> file, String id) async {
     UserProvider userProvider =
         Provider.of<UserProvider>(context, listen: false);
     String? token = userProvider.getToken;
@@ -27,7 +25,7 @@ class UserRepository {
     };
     // try {
     var response = await _apiServices.postMultipartApiResponse(
-        AppUrl.update_profile,
+        "${AppUrl.update_profile}/${id}",
         files: file,
         headers: header);
     print(response);
@@ -73,6 +71,8 @@ class UserRepository {
       'Authorization': "Bearer $token",
       'Content-Type': 'application/json'
     };
+
+    print("body: $body");
     var response = await _apiServices.patchApiResponse(
         "${AppUrl.update_user}/${user.id}",
         headers: header,

@@ -1,8 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
+import 'package:provider/provider.dart';
 import 'package:vbforntend/data/app_exception.dart';
 import 'package:vbforntend/data/response/api_response.dart';
 import 'package:vbforntend/models/user.dart';
+import 'package:vbforntend/providers/profile_provider.dart';
 import 'package:vbforntend/repository/user_repository.dart';
 import 'package:vbforntend/utils/lodable.dart';
 import 'package:vbforntend/utils/utils.dart';
@@ -28,12 +30,14 @@ class UserController extends ChangeNotifier {
     notifyListeners();
   }
 
+  //remove this body param and set is as id which consists profile id and pass it to update profile
   Future<dynamic> upload(BuildContext context, file, [body]) async {
     setIsLoading(true);
     apiResponse = ApiResponse.loading();
     print("file path: $file");
     try {
-      var res = await userRepository.updatePfofile(context, file);
+      var res = await userRepository.updatePfofile(
+          context, file, context.read<ProfileProvider>().profile.id!);
       Future.delayed(const Duration(seconds: 0), () {
         Utils.showSnackBar(context, res['message']);
       });

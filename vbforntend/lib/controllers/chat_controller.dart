@@ -49,4 +49,30 @@ class ChatController extends ChangeNotifier {
       }
     }
   }
+
+  Future<void> listHomeScreenChats(BuildContext context) async {
+    try {
+      // setLoading(Status.LOADING);
+      Map<String, dynamic> res =
+          await chatRepository.listHomeScreenChats(context);
+      print(res);
+      var chatsjson = res['data'];
+      List<Chat> chats = List<Chat>.generate(
+          chatsjson.length, (i) => Chat.fromJson(chatsjson[i]));
+
+      setResponse(ApiResponse<List<Chat>>.completed(
+          data: chats, message: res['message']));
+    } catch (error) {
+      setIsLoading(false);
+
+      if (error is AppException) {
+        print("inside app exception: ${error.error}");
+        Utils.showAlertBox(context, error.error);
+        setResponse(ApiResponse.error(error.error));
+      } else {
+        //  Utils.showAlertBox(context, error.message);
+        print(error);
+      }
+    }
+  }
 }

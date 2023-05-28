@@ -2,7 +2,9 @@ class AppUrl {
   AppUrl._();
   //here 10.0.2.2 is equivalent to localhost as we are on emulator
   //we cant use localhost
-  static const String baseurl = "http://10.0.2.2:8000";
+
+  static const String baseurl = "http://192.168.1.74:8000";
+  // static const String baseurl = "http://10.0.2.2:8000";
   static const String login = "$baseurl/api/login";
   static const String register = "$baseurl/api/register";
 

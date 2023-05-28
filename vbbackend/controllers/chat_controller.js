@@ -18,7 +18,8 @@ class ChatController {
           path: "receiver",
           select: "profile_pic",
           populate: { path: "user", select: "email username" },
-        });
+        })
+        .sort({ created_at: -1 });
       if (chats) {
         res.status(200).send({
           message: "chat fetched successfully",

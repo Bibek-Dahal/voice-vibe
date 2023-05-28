@@ -145,6 +145,9 @@ io.on("connection", async (socket) => {
   socket.on("private message", async (data) => {
     //user is already joined to room on its own id so socket.to(to) will send msg
     //to room where only single user exists
+    // console.log("data", JSON.parse(data));
+    data = JSON.parse(data);
+    let cloudinaryRes;
     let { sender, receiver, text, to, message_type } = data;
 
     // if (message_type == "file" || message_type == "image") {
@@ -170,9 +173,11 @@ io.on("connection", async (socket) => {
 
       try {
         // decode the Base64 string to a buffer
-        const decodedAudio = Buffer.from(data.file.split(",")[1], "base64");
+        // console.log("file", data.file);
+        const decodedAudio = Buffer.from(data.file, "base64");
         const response = await uploadFromBuffer(decodedAudio, "video");
-        console.log(response);
+        console.log("cloudinary res", response);
+        cloudinaryRes = response;
         text = response.secure_url;
         console.log(text);
       } catch (error) {
@@ -208,6 +213,12 @@ io.on("connection", async (socket) => {
     // console.log(newprof);
 
     // console.log(newprof);
+    if (message_type == "audio") {
+      io.to([to, socket.userId]).emit("private message", {
+        chat: newprof,
+        cloudinaryRes: { duration: cloudinaryRes.duration },
+      });
+    }
     io.to([to, socket.userId]).emit("private message", {
       chat: newprof,
     });

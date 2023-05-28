@@ -187,6 +187,8 @@ class _ChatHomeScreenState extends State<ChatHomeScreen> {
                           itemBuilder: (BuildContext context, int index) {
                             late String title;
                             late String subtitle;
+                            late String profileId;
+                            late String? profile_pic;
                             Profile sender = chats[index].sender;
                             Profile receiver = chats[index].receiver;
 
@@ -197,9 +199,13 @@ class _ChatHomeScreenState extends State<ChatHomeScreen> {
                                 context.read<UserProvider>().user!;
                             if (userModel.id == sender.user.id) {
                               title = receiver.user.username;
+                              profile_pic = receiver.profile_pic;
+                              profileId = receiver.id!;
                             }
                             if (userModel.id == receiver.user.id) {
                               title = sender.user.username;
+                              profile_pic = sender.profile_pic;
+                              profileId = sender.id!;
                             }
 
                             //check if msg is image
@@ -234,14 +240,23 @@ class _ChatHomeScreenState extends State<ChatHomeScreen> {
                                 onTap: () {
                                   Navigator.pushNamed(
                                       context, RouteName.privateChatScreen,
-                                      arguments: {'key': 'value'});
+                                      arguments: {
+                                        'username': title,
+                                        'profile_pic': profile_pic,
+                                        'profile_id': profileId
+                                      });
                                 },
                                 child: ListTile(
                                   title: Text(title),
                                   subtitle: Text(subtitle),
-                                  leading: CircleAvatar(
-                                    backgroundColor: Colors.blue,
-                                  ),
+                                  leading: profile_pic == null
+                                      ? CircleAvatar(
+                                          backgroundColor: Colors.blue,
+                                        )
+                                      : CircleAvatar(
+                                          backgroundImage:
+                                              NetworkImage(profile_pic),
+                                        ),
                                 ),
                               ),
                             );

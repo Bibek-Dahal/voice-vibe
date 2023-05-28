@@ -25,7 +25,7 @@ class ChatController extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> listChats(BuildContext context, String id) async {
+  Future<ApiResponse> listChats(BuildContext context, String id) async {
     try {
       // setLoading(Status.LOADING);
       Map<String, dynamic> res = await chatRepository.listChats(context, id);
@@ -36,6 +36,9 @@ class ChatController extends ChangeNotifier {
 
       setResponse(ApiResponse<List<Chat>>.completed(
           data: spaces, message: res['message']));
+
+      return ApiResponse<List<Chat>>.completed(
+          data: spaces, message: res['message']);
     } catch (error) {
       setIsLoading(false);
 
@@ -43,9 +46,11 @@ class ChatController extends ChangeNotifier {
         print("inside app exception: ${error.error}");
         Utils.showAlertBox(context, error.error);
         setResponse(ApiResponse.error(error.error));
+        return ApiResponse.error(error.error);
       } else {
         //  Utils.showAlertBox(context, error.message);
         print(error);
+        return ApiResponse.error(error);
       }
     }
   }

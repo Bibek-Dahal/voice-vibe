@@ -20,7 +20,7 @@ class Chat {
 
   factory Chat.fromJson(Map<String, dynamic> json) {
     return Chat(
-        id: json['id'],
+        id: json['_id'],
         sender: Chat.checkIsMap(json['sender'])
             ? Profile.fromJson(json['sender'])
             : json['sender'],
@@ -28,7 +28,7 @@ class Chat {
             ? Profile.fromJson(json['receiver'])
             : json['receiver'],
         text: json['text'],
-        type: json['type'],
+        type: json['message_type'],
         created_at: json['created_at']);
   }
 }

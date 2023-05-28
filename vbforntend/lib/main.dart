@@ -32,8 +32,7 @@ void main() async {
       ChangeNotifierProvider(create: (_) => ProfileController()),
       ChangeNotifierProvider(create: (_) => ChatController()),
       ChangeNotifierProvider(create: (_) => ProfileProvider()),
-      ChangeNotifierProvider(
-          create: (context) => SocketProvider()..setSocket(context)),
+      ChangeNotifierProvider(create: (context) => SocketProvider()),
     ],
     child: const MyApp(),
   ));

@@ -29,6 +29,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     print("inside init state callded ");
+    // context.read<SocketProvider>().setSocket(context);
     // IO.Socket socket
 
     IO.Socket socket = context.read<SocketProvider>().socket;
@@ -98,7 +99,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       body: Container(
         child: Center(
-          child: Column(
+          child: ListView(
             children: [
               ElevatedButton(
                 onPressed: () async {
@@ -123,6 +124,15 @@ class _HomeScreenState extends State<HomeScreen> {
                   Navigator.pushNamed(context, RouteName.chatHomeScreen);
                 },
                 child: Text("chat home screen"),
+              ),
+              ElevatedButton(
+                onPressed: () async {
+                  Navigator.pushNamed(context, RouteName.privateChatScreen,
+                      arguments: {
+                        'profile': context.read<ProfileProvider>().profile
+                      });
+                },
+                child: Text("private chat"),
               ),
               Consumer<UserController>(
                 builder: (context, value, child) => RoundButton(

@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:vbforntend/controllers/profile_controller.dart';
 import 'package:vbforntend/models/user.dart';
 import 'package:vbforntend/providers/profile_provider.dart';
+import 'package:vbforntend/providers/socket_provider.dart';
 import 'package:vbforntend/providers/user_provider.dart';
 import 'package:vbforntend/routes/route_names.dart';
 
@@ -38,6 +39,7 @@ class _SplashScreenState extends State<SplashScreen> {
       //         context.read<ProfileController>().apiResponse.data)
       //     .catchError((onError) => userProvider.logout(context));
       Future.delayed(const Duration(seconds: 1), () {
+        context.read<SocketProvider>().setSocket(context);
         Navigator.pushReplacementNamed(context, RouteName.homeScreen);
       });
     } else {
